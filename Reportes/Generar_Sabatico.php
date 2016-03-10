@@ -1,0 +1,82 @@
+<?php
+	include "../Scripts/query.php";
+	include "../fpdf/fpdf.php";
+	
+	$conexion = new Querys();
+	
+	$id = $_GET["i"];
+	$comision = $conexion->Consultas("SELECT ID_Usuario, Comision.Fecha_Inicial, Comision.Fecha_Final, Usuario.Nombre AS Nombre, Apellido_Paterno, Apellido_Materno, Unidad.Nombre AS Unidad, Abreviacion FROM Comision, Usuario, Unidad_Departamento, Unidad WHERE FK_Usuario = ID_Usuario AND FK_Unidad_Departamento = ID_Unidad_Departamento AND FK_Unidad = ID_Unidad AND ID_Comision = ".$id);
+	$comision = $comision[0];
+	$pdf=new FPDF();
+	$pdf->AliasNbPages();
+	$pdf->AddPage();
+	$pdf->Image('Langebio.jpg', 165, 10, 33);
+	$pdf->SetY(23);
+	$pdf->SetFont('Courier', 'B', 10);
+	$pdf->Cell(10,10, "", 0, 0, 'L');
+	$pdf->Cell(0,10, 'SOLICITUD DE VACACIONES', 0, 0, 'L');
+	$pdf->SetY(45);
+	$pdf->Cell(10,10, "", 0, 0, 'L');
+	$pdf->Cell(15,10, 'NOMBRE: ', 0, 0, 'L');
+	$pdf->SetFont('Arial', '', 11);
+	$pdf->Cell(80,10, strtoupper(utf8_decode($comision["Nombre"]." ".$comision["Apellido_Paterno"]." ".$comision["Apellido_Materno"])), 0, 0, 'L');
+	$pdf->SetFont('Courier', 'B', 10);
+	$pdf->Cell(15,10, 'FIRMA: ', 0, 0, 'L');
+	$pdf->Cell(40, 8, "", "B", 0, 'L');
+	$pdf->SetY(65);
+	$pdf->Cell(10,10, "", 0, 0, 'L');
+	$pdf->Cell(21,10, utf8_decode('CATEGORÍA: '), 0, 0, 'L');
+	$categoria = $conexion->Consultas("SELECT Puesto FROM Categoria WHERE FK_Usuario = ".$comision["ID_Usuario"]." ORDER BY Fecha");
+	if(count($categoria) > 0)
+	{
+		$pdf->SetFont('Arial', '', 11);
+		$pdf->Cell(0, 10, strtoupper(utf8_decode($categoria[count($categoria) - 1]["Puesto"])), 0, 0, 'L');
+	}
+	$pdf->SetY(85);
+	$pdf->SetFont('Courier', 'B', 10);
+	$pdf->Cell(10,10, "", 0, 0, 'L');
+	$pdf->Cell(27,10, 'DEPARTAMENTO: ', 0, 0, 'L');
+	$pdf->SetFont('Arial', '', 11);
+	$pdf->Cell(0, 10, strtoupper(utf8_decode((($comision["Abreviacion"] != "") ? $comision["Abreviacion"] : $comision["Unidad"]))), 0, 0, 'L');
+	$pdf->SetY(100);
+	$pdf->Cell(25,10, "", 0, 0, 'L');
+	$pdf->Cell(0, 7, "POR ESTE MEDIO CONDUCTO, SOLICITO A USTED AUTORIZACION PARA TOMAR A", 0, 'L');
+	$pdf->Ln();
+	$pdf->Cell(10,10, "", 0, 0, 'L');
+	$pdf->MultiCell(0, 7, " CUENTA DE VACACIONES EL (LOS) DIA (S) HABIL (ES) COMPRENDIDOS ENTRE EL PERIODO ABAJO INDICADO, EN BASE AL ART. 60 DE LA C.G.T.", 0, 'L');
+	$pdf->SetY(140);
+	$pdf->SetFont('Courier', 'B', 10);
+	$pdf->Cell(10,10, "", 0, 0, 'L');
+	$pdf->Cell(0,10, utf8_decode('INICIO Y TÉRMINO:'), 0, 0, 'L');
+	$pdf->Ln();
+	$pdf->SetFont('Arial', '', 11);
+	$pdf->Cell(10,10, "", 0, 0, 'L');
+	$fecha_inicial = explode("-", $comision["Fecha_Inicial"]);
+	$fecha_final = explode("-", $comision["Fecha_Final"]);
+	$pdf->Cell(0, 10, $fecha_inicial[2]."/".$fecha_inicial[1]."/".$fecha_inicial[0]." - ".$fecha_final[2]."/".$fecha_final[1]."/".$fecha_final[0], 0, 0, 'L');
+	$pdf->SetY(175);
+	$pdf->SetFont('Arial', 'B', 11);
+	$pdf->Cell(10,10, "", 0, 0, 'L');
+	$pdf->Cell(0, 10, utf8_decode("AUTORIZACIÓN:"), 0, 0, 'L');
+	$pdf->SetY(200);
+	$pdf->Cell(10, 5, "", 0, 0, 'L');
+	$pdf->Cell(60, 6, "", "B", 0, 'L');
+	$pdf->Cell(40, 5, "", 0, 0, 'L');
+	$pdf->Cell(60, 6, "", "B", 0, 'L');
+	$pdf->Ln();
+	$pdf->Cell(10, 5, "", 0, 0, 'L');
+	$pdf->Cell(60, 5, "Dr. Luis Rafael Herrera Estrella", 0, 0, 'L');
+	$pdf->Cell(35, 5, "", 0, 0, 'L');
+	$pdf->Cell(60, 5, utf8_decode("Lic. Mayra Alejandra Zavala Hernández"), 0, 0, 'L');
+	$pdf->Ln();
+	$pdf->Cell(10, 5, "", 0, 0, 'L');
+	$pdf->Cell(60, 5, "Jefe Inmediato", 0, 0, 'L');
+	$pdf->Cell(40, 5, "", 0, 0, 'L');
+	$pdf->Cell(60, 5, "Jefa Depto. De Personal", 0, 0, 'L');
+	$pdf->SetY(264);
+	$pdf->SetFont('Arial', '', 9);
+	$pdf->MultiCell(0, 4, "Km. 9.6 Libramiento Norte, Apartado Postal 629, Irapuato, Gto. 36821", 0, 'C');
+	$pdf->MultiCell(0, 4, "Tel. (462) 623 96 00; Fax (462) 624 5846", 0, 'C');
+	$pdf->MultiCell(0, 4, "rrivera@ira.cinvestav.mx", 0, 'C');
+	$pdf->Output($fecha_inicial[2]."/".$fecha_inicial[1]."/".$fecha_inicial[0]." - ".$fecha_final[2]."/".$fecha_final[1]."/".$fecha_final[0].'.pdf', 'I'); 
+?>
