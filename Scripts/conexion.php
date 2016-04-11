@@ -6,7 +6,7 @@ class Conexion{
 	var $contrasenia;
 	var $base_datos;
 	
-	function Conexion($servidor = 'localhost', $usuario = 'selecta', $contrasenia = 's3l3ct4', $base_datos = 'selecta')
+	function Conexion($servidor = 'localhost', $usuario = 'selectaapp', $contrasenia = 's3l3ct4', $base_datos = 'selecta')
 	{
 		$this->servidor = $servidor;
 		$this->usuario = $usuario;
