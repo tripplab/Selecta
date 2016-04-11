@@ -17,13 +17,7 @@ class Conexion{
 	function Conexion_BD()
 	{
 		$conexion = new mysqli($this->servidor, $this->usuario, $this->contrasenia, $this->base_datos);
-		
-		if ($conexion->connect_errno) {
-    		echo "Fallo al conectar a MySQL: (" . $conexion->connect_errno . ") " . $conexion->connect_error;
-		} else {
-		echo $conexion->host_info . "\n"
-		return($conexion);;
-		}
+		return($conexion);
 	}
 }
 ?>
