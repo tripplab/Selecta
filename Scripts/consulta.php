@@ -331,8 +331,8 @@
 			echo json_encode($datos[0]);
 		break;
 		case "Logeo":
-			$user="mct";
-			$pass="mct";
+			$user=$_POST["usuario"];
+			$pass=$_POST["contrasenia"];
 			
 			$usuario = $conexion->Consultas("SELECT COUNT(Nick) as Nick FROM Usuario WHERE Nick LIKE '".$user."'");
 			if($usuario[0]["Nick"] > 0)
