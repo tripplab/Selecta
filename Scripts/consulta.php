@@ -331,13 +331,16 @@
 			echo json_encode($datos[0]);
 		break;
 		case "Logeo":
-			$usuario = $conexion->Consultas("SELECT COUNT(Nick) as Nick FROM Usuario WHERE Nick LIKE '".$_POST["usuario"]."'");
+			$user=$_POST["usuario"];
+			$pass=$_POST["contrasenia"];
+			
+			$usuario = $conexion->Consultas("SELECT COUNT(Nick) as Nick FROM Usuario WHERE Nick LIKE '".$user."'");
 			if($usuario[0]["Nick"] > 0)
 			{
                             
-                                $contrase=$_POST["contrasenia"];
+                                $contrase=$pass;
               
-				$datos = $conexion->Consultas("SELECT ID_Usuario, Rol FROM Usuario WHERE Nick LIKE '".$_POST["usuario"]."' AND Contrasenia LIKE '". sha1($contrase)."'");
+				$datos = $conexion->Consultas("SELECT ID_Usuario, Rol FROM Usuario WHERE Nick LIKE '".$user."' AND Contrasenia LIKE '". sha1($contrase)."'");
 				if(count($datos) > 0)
 				{
 					$_SESSION["ID"] = $datos[0]["ID_Usuario"];
