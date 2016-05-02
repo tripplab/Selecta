@@ -191,7 +191,7 @@
 							if($producto[$y]["Paginas"] != "")
 								$detalles .= $producto[$y]["Paginas"];
 							$fecha = explode("-", $producto[$y]["Fecha"]);
-							$detalles .= "(".$fecha[$y].")";
+						//	$detalles .= "(".$fecha[$y].")";
 							$detalles .=", IF ".$detalles1[0]["Factor_Impacto"];
                                                     }
 						}
