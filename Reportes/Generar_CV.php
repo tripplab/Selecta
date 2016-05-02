@@ -1,10 +1,14 @@
 <?php
+error_reporting(0);
 header("Content-Type: text/html; charset=iso-8859-1 ");
 	session_start();
 	$id_usuario = $_SESSION['ID']; 
-	$inicial = ($_GET["i"] == "Año-Mes-Día") ? "1900-00-00" : $_GET["i"];
-	$final =  ($_GET["f"] == "Año-Mes-Día") ? "2050-00-00" : $_GET["f"];
+	$inicial = ($_GET["i"] == "AÃ±o-Mes-DÃ­a") ? "1900-00-00" : $_GET["i"];
+	$final =  ($_GET["f"] == "AÃ±o-Mes-DÃ­a") ? "2050-00-00" : $_GET["f"];
      
+        
+        
+        
 	if($inicial != "1900-00-00")
 	{
 		$inicial = explode("-", $inicial);
@@ -24,8 +28,8 @@ header("Content-Type: text/html; charset=iso-8859-1 ");
 	/**
 	* Incluir archivos
 	* 
-	* Se incluye la dirección del archivo donde se encuentra la función que permite
-	* la conexión a la base de datos. Así también, se incluye el archivo donde se 
+	* Se incluye la direcciÃ³n del archivo donde se encuentra la funciÃ³n que permite
+	* la conexiÃ³n a la base de datos. AsÃ­ tambiÃ©n, se incluye el archivo donde se 
 	* encuentran las funciones restantes con las que cuenta el sistema.
 	*/
         
@@ -35,8 +39,8 @@ header("Content-Type: text/html; charset=iso-8859-1 ");
 	/**
 	* Documento CV
 	* 
-	* El siguiente coódigo es el encargado de generar el CV de un usuario del sistema,
-	* así también de incluir todos los productos que ha realizado clasificando cada uno
+	* El siguiente coÃ³digo es el encargado de generar el CV de un usuario del sistema,
+	* asÃ­ tambiÃ©n de incluir todos los productos que ha realizado clasificando cada uno
 	* de ellos como lo estipula el reglamento de productividad.
 	*/
       
@@ -54,14 +58,25 @@ header("Content-Type: text/html; charset=iso-8859-1 ");
 	$pdf=new PDF();
 	$pdf->AliasNbPages();
 	$pdf->AddPage();
+        
+         
+                                
 	$pdf->SetFont('Arial', '', 20);
-	$inicial = explode("-", $inicial);
-	$final = explode("-", $final);
-	if($inicial == "1900-00-00" || $final == "2050-00-00")
-            $pdf->Cell(0, 15, 'Curriculum Vitae '.$inicial[2]."/".$inicial[1]."/".$inicial[0].' a '.$final[2]."/".$final[1]."/".$final[0], 0, 0, 'C');
-	else
+	
+       
+	if($inicial != "1900-00-00" || $final != "2050-00-00")
+        {
+            $inicial = explode("-", $inicial);
+	     $final = explode("-", $final);
+            $pdf->Cell(0, 15, 'Curriculum Vitae '.$inicial[0]."/".$inicial[1]."/".$inicial[2].' a '.$final[0]."/".$final[1]."/".$final[2], 0, 0, 'C');
+        }
+        else
+        {
+            $inicial = explode("-", $inicial);
+	     $final = explode("-", $final);
             $pdf->Cell(0, 15, 'Curriculum Vitae', 0, 0, 'C');
 	$pdf->Ln();
+        }
             
         $conexion = new Querys();
         
@@ -122,7 +137,7 @@ header("Content-Type: text/html; charset=iso-8859-1 ");
 	//Posicion y cat actuales        
 	$pdf->Ln();
 	$pdf->SetFont('Arial', '', 14);
-	$pdf->Cell(0,10,utf8_decode("Posición y Categoría Actuales:"), 0, 'L'); 
+	$pdf->Cell(0,10,utf8_decode("PosiciÃ³n y CategorÃ­a Actuales:"), 0, 'L'); 
 	$pdf->Ln();
 	$result = $conexion->Consultas("SELECT Puesto, Categoria, Subcategoria, Unidad.Nombre as Unidad, Institucion.Nombre as Institucion, "."Fecha FROM Categoria, Usuario, Unidad_Departamento, Unidad, Institucion WHERE ID_Institucion = FK_Institucion "."AND ID_Unidad = FK_Unidad AND ID_Unidad_Departamento = FK_Unidad_Departamento AND ID_Usuario = ".$id_usuario." ". "AND ID_Usuario = FK_Usuario ORDER BY Fecha");	
 	if(count($result) > 0)
@@ -174,7 +189,7 @@ header("Content-Type: text/html; charset=iso-8859-1 ");
         $pdf->SetTextColor(51,51,255);
         $pdf->setFillColor(230,230,230); 
        
-				$pdf->Multicell(0,10,utf8_decode("2  Productos de Investigación o Desarrollo."), 0, 1,'L',1);
+				$pdf->Multicell(0,10,utf8_decode("2  Productos de InvestigaciÃ³n o Desarrollo."), 0, 1,'L',1);
 				$pdf->Ln();
 				$bandera = true;   
                                  $pdf->SetTextColor(0,0,0);
@@ -262,7 +277,7 @@ header("Content-Type: text/html; charset=iso-8859-1 ");
                               $pdf->SetFont('Arial', '', 15);
         $pdf->SetTextColor(51,51,255);
         $pdf->setFillColor(230,230,230); 
-				$pdf->Multicell(0,5,utf8_decode("2  Productos de Investigación o Desarrollo."), 0, 1,'L',1);
+				$pdf->Multicell(0,5,utf8_decode("2  Productos de InvestigaciÃ³n o Desarrollo."), 0, 1,'L',1);
 				$pdf->Ln();
 				$bandera = true;    
                                  $pdf->SetTextColor(0,0,0);
@@ -339,31 +354,202 @@ header("Content-Type: text/html; charset=iso-8859-1 ");
 	$bandera2 = false;
         
         
-	//  3 Formaci�n de Recursos Humanos.
-       
-	$arrayarti = array("3.1.a","3.1.b","3.1.c");   
-       
+	//  3 Formaciï¿½n de Recursos Humanos.
+       global $final;
+       global $inicial;
+        $fechaIni=$inicial[0]."-".$inicial[1]."-".$inicial[2];
+        $fechaTer=$final[0]."-".$final[1]."-".$final[2];
+	
+        
+        $arrayarti = array("3.1.a","3.1.b","3.1.c");   
+      
+      
 	for($arti = 0; $arti < 3; $arti++)
 	{
-          
-            
+        
 		$bandera2 = false;  
-              
-		$result = $conexion->Consultas("SELECT Curso.Nombre AS Nombre_Curso, Formacion_Curso.Propedeutico, Formacion_Curso.Nivel_AnioLic, ". "Tipo_Copei.Tipo, Programa_Academico.Nombre_Programa, Formacion_Curso.Total_Horas, Institucion.Nombre AS Nombre_Institucion, Tipo_Copei.Descripcion, ". "Unidad.Nombre AS Nombre_Unidad, Formacion_Curso.Fecha_Inicial, Formacion_Curso.Fecha_Final, Etiqueta_Copei FROM Formacion_Curso, Curso, Tipo_Copei, ". "Programa_Academico, Institucion, Unidad, Unidad_Departamento,Usuario WHERE Tipo_Copei.Tipo = '".$arrayarti[$arti]."' ". "AND Formacion_Curso.Fecha_Inicial > '".$inicial[0]."-".$inicial[1]."-".$inicial[2]."' AND Formacion_Curso.Fecha_Final < '".$final[0]."-".$final[1]."-".$final[2]."' AND ID_Institucion = FK_Institucion AND ID_Unidad = FK_Unidad AND ID_Unidad_Departamento = FK_Unidad_Departamento ". "AND Usuario.ID_Usuario = ".$id_usuario." ORDER BY Formacion_Curso.Etiqueta_Copei;");
-		
+           	$result = $conexion->Consultas("SELECT Curso.Nombre AS Nombre_Curso, Programa_Academico.Nombre_Programa,Formacion_Curso.Propedeutico,Formacion_Curso.Nivel_AnioLic,Formacion_Curso.Total_Horas,Formacion_Curso.Fecha_Inicial,Formacion_Curso.Fecha_Final ,tipo_copei.Tipo,Tipo_Copei.Descripcion,Formacion_Curso.Etiqueta_Copei FROM Curso, Programa_Academico,Formacion_Curso,usuario,tipo_copei where curso.FK_Programa=programa_academico.ID_Programa AND Usuario.ID_Usuario = ".$id_usuario." AND formacion_curso.FK_Curso=curso.ID_Curso AND formacion_curso.FK_Tipo=tipo_copei.ID_Tipo and Tipo_Copei.Tipo = '".$arrayarti[$arti]."' ORDER BY Formacion_Curso.Etiqueta_Copei;");
+ 
+//		$result = $conexion->Consultas("SELECT Curso.Nombre AS Nombre_Curso, Formacion_Curso.Propedeutico, Formacion_Curso.Nivel_AnioLic, ". "Tipo_Copei.Tipo, Programa_Academico.Nombre_Programa, Formacion_Curso.Total_Horas, Institucion.Nombre AS Nombre_Institucion, Tipo_Copei.Descripcion, ". "Unidad.Nombre AS Nombre_Unidad, Formacion_Curso.Fecha_Inicial, Formacion_Curso.Fecha_Final, Etiqueta_Copei FROM Formacion_Curso, Curso, Tipo_Copei, ". "Programa_Academico, Institucion, Unidad, Unidad_Departamento,Usuario WHERE Tipo_Copei.Tipo = '".$arrayarti[$arti]."' ". "AND Formacion_Curso.Fecha_Inicial > '".$fechaIni."' AND Formacion_Curso.Fecha_Final < '".$fechaTer."' AND ID_Institucion = FK_Institucion AND ID_Unidad = FK_Unidad AND ID_Unidad_Departamento = FK_Unidad_Departamento ". "AND Usuario.ID_Usuario = ".$id_usuario." ORDER BY Formacion_Curso.Etiqueta_Copei;");
                 if(count($result) > 0)
-		{                                 
+		{                 
+                  
 			$pdf->SetFont('Arial', '', 14);
 			if($bandera == false)
 			{
                                 $pdf->SetFont('Arial', '', 15);
                                 $pdf->SetTextColor(51,51,255);
                                 $pdf->setFillColor(230,230,230); 
-				$pdf->Multicell(0,5,utf8_decode("3  Formación de Recursos Humanos."), 0, 1,'L',1);
+				$pdf->Multicell(0,5,utf8_decode("3  FormaciÃ³n de Recursos Humanos."), 0, 1,'L',1);
 				$pdf->Ln();
 				$bandera = true;  
                                  $pdf->SetTextColor(0,0,0);
-			}              
+                                    if($arrayarti[$arti]=='3.1.a'){
+                                        
+                                        $pdf->SetFont('Arial', '', 14);
+                                        $pdf->setFillColor(230,230,230); 
+					$pdf->Multicell(0,5,$arrayarti[$arti]." ".utf8_decode($result[$x]["Descripcion"]).".",0, 1,'L',1);            
+					$pdf->Ln();
+					$bandera2 = true; 
+                                        $pdf->SetTextColor(0,0,0);
+                                        
+                            $resultado = $conexion->Consultas("SELECT Curso.Nombre AS Nombre_Curso, Programa_Academico.Nombre_Programa,Formacion_Curso.Propedeutico,Formacion_Curso.Nivel_AnioLic,Formacion_Curso.Total_Horas,Formacion_Curso.Fecha_Inicial,Formacion_Curso.Fecha_Final ,tipo_copei.Tipo,Tipo_Copei.Descripcion,Formacion_Curso.Etiqueta_Copei,Curso.ID_Curso,Formacion_Curso.FK_Curso FROM Curso, Programa_Academico,Formacion_Curso,usuario,tipo_copei where curso.FK_Programa=programa_academico.ID_Programa AND Usuario.ID_Usuario = ".$id_usuario." AND formacion_curso.FK_Curso=curso.ID_Curso AND formacion_curso.FK_Tipo=tipo_copei.ID_Tipo and Tipo_Copei.Tipo = '3.1.a' ORDER BY Formacion_Curso.Etiqueta_Copei;");
+ 
+
+
+//Seteamos el inicio del margen superior en 25 pixeles
+ 
+$y_axis_initial = 25;
+ 
+
+ if(count($resultado) >0)
+	{   
+            $pdf->SetFont('Arial','B',12);
+ 
+$pdf->Cell(40,6,'',0,0,'C');
+$pdf->Cell(100,6,'LISTA DE PROGRAMAS',1,0,'C');
+
+ 
+			$pdf->MultiCell(0,5,"", 0, 'L');  
+			$pdf->Ln();
+$resultProgramas = $conexion->Consultas("SELECT distinct curso.Nombre,programa_academico.nombre_Programa from  curso,formacion_curso,programa_academico where formacion_curso.FK_Curso=Curso.ID_Curso AND formacion_curso.FK_Usuario=".$id_usuario." AND FK_Tipo=50 and curso.FK_Programa=Programa_academico.ID_programa order by FK_Programa DESC; ");        
+
+$acum="";
+$arrayAsociaP=array();
+for($y = 0; $y < count($resultProgramas); $y++)
+			{  
+     
+                                if($resultProgramas[$y]["nombre_Programa"]==$acum)
+                                {
+                                    $resultProgramas[$y]["nombre_Programa"]="";
+                                }
+                                else{
+                                 $pdf->Multicell(0,5,utf8_decode(" ".$resultProgramas[$y]["nombre_Programa"]), 0, 'L');
+				$pdf->Ln();
+                                $acum=$resultProgramas[$y]["nombre_Programa"];
+                               
+                                }
+                                $a=$y+1;
+                                $Identifa_Programa="$a-".$resultProgramas[$y]["Nombre"];
+                                 $arrayAsociaP[$y]=$Identifa_Programa;
+                                 
+                                $pdf->Multicell(0,5,utf8_decode("$a-".$resultProgramas[$y]["Nombre"]), 0, 'L');
+				$pdf->Ln();
+                        }
+
+$pdf->Ln(10);
+ 
+//Creamos las celdas para los titulo de cada columna y le asignamos un fondo gris y el tipo de letra
+$pdf->SetFillColor(232,232,232);
+ 
+$pdf->SetFont('Arial','B',10);
+$pdf->Cell(15,6,' ',1,0,'C',1);
+$pdf->Cell(20,6,'Fecha ',1,0,'C',1);
+ for($y = 0; $y < count($resultProgramas); $y++)
+			{ 
+     
+     $al=$y+1;
+$pdf->Cell(15,6,$al,1,0,'C',1);
+
+                        }
+ 
+$pdf->Ln(10);
+ 
+//Comienzo a crear las fiulas de productos segÃºn la consulta mysql
+ 
+
+ for($x = 0; $x < count($resultado); $x++)
+		{
+     
+    $titulo = $resultado[$x]["Nombre_Curso"];
+        $etiqueta="3.1.a.".$resultado[$x]["Etiqueta_Copei"];
+        
+        $fechaFinalMostrar=$resultado[$x]["Fecha_Final"];
+ 
+    $Nombre = $resultado[$x]['Nombre_Programa'];
+    
+    $Hora=$resultado[$x]['Total_Horas'];
+ 
+   
+    
+   $pdf->Cell(15,15,$etiqueta,1,0,'L',0);
+ 
+       $pdf->Cell(20,15,$fechaFinalMostrar,1,0,'R',1);
+//Muestro la iamgen dentro de la celda GetX y GetY dan las coordenadas actuales de la fila
+  
+       $NombreCurso=$resultado[$x]["Nombre_Curso"];
+     
+   
+ 
+             
+        for($w = 0; $w < count($resultProgramas); $w++){
+            
+             $NombreCursoIdent=$arrayAsociaP[$w];
+              $curso1=explode("-", $NombreCursoIdent);
+              
+               $curso1[1]=utf8_decode($curso1[1]);
+               
+             $NombreCursoA=utf8_decode($NombreCurso);
+             
+             if (strcasecmp  ($NombreCursoA , $curso1[1] ) == 0) {  $contador=$curso1[0]; }
+             
+           
+        }
+        
+         
+       
+  for($y = 0; $y < $contador-1; $y++)
+			{ 
+               $pdf->Cell(15,15," ",1,0,'C',1);
+        
+                        }
+     $pdf->Cell(15,15,$Hora,1,0,'C',1);
+     
+     $totalProgramas=count($resultProgramas);
+     $contadorDiferencia=$totalProgramas-$contador;
+      for($R = 0; $R < $contadorDiferencia; $R++)
+			{ 
+               $pdf->Cell(15,15," ",1,0,'C',1);
+        
+                        }
+
+$pdf->Ln(15);
+ 
+}
+
+$TotalHrs="Horas";
+$pdf->Cell(15,15,$TotalHrs,1,0,'L',0);
+
+$resultadoSuma = $conexion->Consultas("SELECT SUM(Formacion_Curso.Total_Horas) as total  FROM Curso, Programa_Academico,Formacion_Curso,usuario,tipo_copei where curso.FK_Programa=programa_academico.ID_Programa AND Usuario.ID_Usuario = ".$id_usuario." AND formacion_curso.FK_Curso=curso.ID_Curso AND formacion_curso.FK_Tipo=tipo_copei.ID_Tipo and Tipo_Copei.Tipo = '3.1.a' ORDER BY Formacion_Curso.Etiqueta_Copei;");	
+
+
+
+$TotalCantidad=$resultadoSuma[0]["total"];
+$pdf->Cell(20,15,$TotalCantidad,1,0,'L',0);
+
+    for($s= 0; $s < count($resultProgramas); $s++){
+            
+             $NombreCursoIdent=$arrayAsociaP[$s];
+              $curso1=explode("-", $NombreCursoIdent);
+              
+               $curso1[1]=utf8_decode($curso1[1]);
+//               $cursoInd= $curso1[1];
+//             $cursoIndi=utf8_decode($cursoInd);
+             
+           $resultadoIndiv = $conexion->Consultas("SELECT SUM(Formacion_Curso.Total_Horas) as totalInd  FROM Curso, Programa_Academico,Formacion_Curso,usuario,tipo_copei where curso.FK_Programa=programa_academico.ID_Programa AND Usuario.ID_Usuario =".$id_usuario." AND formacion_curso.FK_Curso=curso.ID_Curso AND formacion_curso.FK_Tipo=tipo_copei.ID_Tipo and Tipo_Copei.Tipo = '3.1.a' AND Curso.Nombre='".utf8_encode($curso1[1])."' ORDER BY Formacion_Curso.Etiqueta_Copei;");	
+       $TotalHoraInd=$resultadoIndiv[0]["totalInd"];
+$pdf->Cell(15,15,$TotalHoraInd,1,0,'L',0);
+
+        }
+ 
+ $pdf->MultiCell(0,5,"", 0, 'L');
+ $pdf->MultiCell(0,5,"", 0, 'L'); 
+ $pdf->MultiCell(0,5,"", 0, 'L'); 
+ $pdf->MultiCell(0,5,"", 0, 'L'); 
+        }
+                        }
+			}   
+                     
 			for($x = 0; $x < count($result); $x++)
 			{ 
 				$cadena="";
@@ -379,6 +565,7 @@ header("Content-Type: text/html; charset=iso-8859-1 ");
 				$fecha_Inicial = explode("-", $result[$x]["Fecha_Inicial"]);
 				$fecha_Final = explode("-", $result[$x]["Fecha_Final"]);
 				$pdf->SetFont('Arial', '', 10);
+                                
 				$pdf->MultiCell(0,5,$arrayarti[$arti].".".$result[$x]["Etiqueta_Copei"], 0, 'L'); 
 				if($result[$x]["Nombre_Curso"] != "")
 					$cadena  = $cadena.utf8_decode($result[$x]["Nombre_Curso"]).", "; 
@@ -388,11 +575,11 @@ header("Content-Type: text/html; charset=iso-8859-1 ");
 					$cadena  = $cadena.utf8_decode($result[$x]["Nivel_AnioLic"]); 
 				if($result[$x]["Nombre_Programa"] != "")
 					$cadena  = $cadena." en ".utf8_decode($result[$x]["Nombre_Programa"]).", ";                                                 
-				if($result[$x]["Nombre_Institucion"] != "")
-					$cadena  = $cadena.utf8_decode($result[$x]["Nombre_Institucion"]).", ";                                                 
-				if($result[$x]["Nombre_Unidad"] != "")
-					$cadena  = $cadena.utf8_decode($result[$x]["Nombre_Unidad"]).", ";                                                 
-				$cadena  = $cadena.$fecha_Inicial[2]."/".$fecha_Inicial[1]."/".$fecha_Inicial[0]." a ".$fecha_Final[2]."/".$fecha_Final[1]."/".$fecha_Final[0].", "; 
+//				if($result[$x]["Nombre_Institucion"] != "")
+//					$cadena  = $cadena.utf8_decode($result[$x]["Nombre_Institucion"]).", ";                                                 
+//				if($result[$x]["Nombre_Unidad"] != "")
+//					$cadena  = $cadena.utf8_decode($result[$x]["Nombre_Unidad"]).", ";                                                 
+				$cadena  = $cadena.$fecha_Inicial[0]."/".$fecha_Inicial[1]."/".$fecha_Inicial[2]." a ".$fecha_Final[0]."/".$fecha_Final[1]."/".$fecha_Final[2].", "; 
 				if($result[$x]["Total_Horas"] != "")
 					$cadena  = $cadena.utf8_decode($result[$x]["Total_Horas"])."hs";                                
 				$pdf->MultiCell(0,5,$cadena.".", 0, 'L'); 
@@ -405,11 +592,21 @@ header("Content-Type: text/html; charset=iso-8859-1 ");
 	unset($result2);              
 	$bandera2 = false;
         
-        global $fecha_Final;
+        //Consulta la tabla productos solicitando todos los productos
+ 
+
         
+        
+        global $fecha_Final;
+        global $final;
+        $FechaTermino=$final[0]."-".$final[1]."-".$final[2];
+        
+         $pdf->setFillColor(230,230,230); 
+			
+			$pdf->Ln();
 	//...3.2       
 	$bandera2 = false; 
-	$result = $conexion->Consultas("SELECT FK_Tesis, Etiqueta_Copei, FK_Tipo, Titulo, Concluida, Fecha_Final, Lugar  FROM Usuario_Tesis, Tesis WHERE ID_Tesis = FK_Tesis AND Tesis.Fecha_Final < '".$fecha_Final[0]."-".$fecha_Final[1]."-".$fecha_Final[2]."' AND  FK_Usuario = ".$id_usuario." ORDER BY FK_Tipo;");        
+	$result = $conexion->Consultas("SELECT FK_Tesis, Etiqueta_Copei, FK_Tipo, Titulo, Concluida, Fecha_Final, Lugar  FROM Usuario_Tesis, Tesis WHERE ID_Tesis = FK_Tesis AND Tesis.Fecha_Final < '".$FechaTermino."' AND  FK_Usuario = '".$id_usuario."';");        
 	
         if(count($result) >0)
 	{         
@@ -420,7 +617,7 @@ header("Content-Type: text/html; charset=iso-8859-1 ");
 		if($bandera == false)
 		{
                     $pdf->setFillColor(230,230,230); 
-			$pdf->Multicell(0,5,utf8_decode("3  Formación de Recursos Humanos."), 0, 1,'L',1);
+			$pdf->Multicell(0,5,utf8_decode("3  FormaciÃ³n de Recursos Humanos."), 0, 1,'L',1);
 			$pdf->Ln();
 			$bandera = true;  
 		}
@@ -429,24 +626,27 @@ header("Content-Type: text/html; charset=iso-8859-1 ");
 			if($bandera3 == false && $result[$x]["FK_Tipo"] == "54")
 			{
 				$pdf->SetFont('Arial', '', 14);
-				$result5 = $conexion->Consultas("SELECT Descripcion, Tipo FROM Tipo_Copei WHERE ID_Tipo = ".$result[$x]["FK_Tipo"].";");
-				$pdf->Multicell(0,5,utf8_decode("3.2.a  ".$result5[$parasoloundato]["Descripcion"]), 0, 'L');
+				$result5 = $conexion->Consultas("SELECT Descripcion, Tipo FROM Tipo_Copei WHERE ID_Tipo = ".$result[$x]["FK_Tipo"]." order by Tipo; ");
+				$pdf->setFillColor(230,230,230);
+                                $pdf->Multicell(0,5,utf8_decode("3.2.a  ".$result5[$parasoloundato]["Descripcion"]), 0, 1,'L',1);
 				$pdf->Ln();
 				$bandera3 = true;  
 			}
 			if($bandera4 == false && $result[$x]["FK_Tipo"] == "55")
 			{
 				$pdf->SetFont('Arial', '', 14);   
-				$result5 = $conexion->Consultas("SELECT Descripcion, Tipo FROM Tipo_Copei WHERE ID_Tipo = ".$result[$x]["FK_Tipo"].";");
-				$pdf->Multicell(0,5,utf8_decode("3.2.b  ".$result5[$parasoloundato]["Descripcion"]), 0, 'L');
+				$result5 = $conexion->Consultas("SELECT Descripcion, Tipo FROM Tipo_Copei WHERE ID_Tipo = ".$result[$x]["FK_Tipo"]." order by Tipo;");
+				$pdf->setFillColor(230,230,230);
+                                $pdf->Multicell(0,5,utf8_decode("3.2.b  ".$result5[$parasoloundato]["Descripcion"]),  0, 1,'L',1);
 				$pdf->Ln();
 				$bandera4 = true;  
 			}
 			if($bandera5 == false && $result[$x]["FK_Tipo"] == "56")
 			{
 				$pdf->SetFont('Arial', '', 14);
-				$result5 = $conexion->Consultas("SELECT Descripcion, Tipo FROM Tipo_Copei WHERE ID_Tipo = ".$result[$x]["FK_Tipo"].";");
-				$pdf->Multicell(0,5,utf8_decode("3.3  ".$result5[$parasoloundato]["Descripcion"]), 0, 'L');
+				$pdf->setFillColor(230,230,230);
+                                $result5 = $conexion->Consultas("SELECT Descripcion, Tipo FROM Tipo_Copei WHERE ID_Tipo = ".$result[$x]["FK_Tipo"].";");
+				$pdf->Multicell(0,5,utf8_decode("3.3  ".$result5[$parasoloundato]["Descripcion"]),  0, 1,'L',1);
 				$pdf->Ln();
 				$bandera5 = true;  
 			}
@@ -469,7 +669,7 @@ header("Content-Type: text/html; charset=iso-8859-1 ");
 					//$result4 = $conexion->Consultas("SELECT Usuario.Nombre, Usuario.Apellido_Paterno, Usuario.Apellido_Materno ". "FROM Usuario WHERE ID_Usuario = ".$result2[$y]["FK_Usuario"].";");
 					if ($bandera3 == false)
 					{
-						$colaboracion = utf8_decode(" en Co-Dirección con el/la ").utf8_decode($result2[$y]["Alias"]);                                
+						$colaboracion = utf8_decode(" en Co-DirecciÃ³n con el/la ").utf8_decode($result2[$y]["Alias"]);                                
 						$bandera3 = true;
 					}
 					else
@@ -492,6 +692,16 @@ header("Content-Type: text/html; charset=iso-8859-1 ");
 			$pdf->MultiCell(0,5,"", 0, 'L');
 		}                   
 	}
+ 
+        
+
+
+
+
+ 
+
+
+
          $bandera = false;  
 	// 4.1
 	$result = $conexion->Consultas("SELECT DISTINCT FK_Journal FROM Articulos, Alias ". "WHERE Fk_Usuario = ".$id_usuario." AND FK_Articulo = ID_Articulo AND Articulos.Fecha > '".$inicial[0]."-".$inicial[1]."-".$inicial[2]."' AND FK_Journal <> '' ORDER BY FK_Journal;");
@@ -500,10 +710,13 @@ header("Content-Type: text/html; charset=iso-8859-1 ");
 		$pdf->SetFont('Arial', '', 14);
 		if($bandera == false)
 		{
+                     $pdf->MultiCell(0,5,"", 0, 'L');
+                     $pdf->MultiCell(0,5,"", 0, 'L');
+                     $pdf->MultiCell(0,5,"", 0, 'L');
                                                                       $pdf->SetFont('Arial', '', 15);
                $pdf->SetTextColor(51,51,255);
              $pdf->setFillColor(230,230,230); 
-			$pdf->Multicell(0,10,utf8_decode("4  Repercusión Académica."), 0, 1,'L',1);
+			$pdf->Multicell(0,10,utf8_decode("4  RepercusiÃ³n AcadÃ©mica."), 0, 1,'L',1);
 			$pdf->Ln();
 			$bandera = true;                    http://localhost/SELECTA_IMPROVED/Selecta
                              $pdf->SetTextColor(0,0,0);
@@ -511,7 +724,8 @@ header("Content-Type: text/html; charset=iso-8859-1 ");
 		}                   
 		$result2 = $conexion->Consultas("SELECT Descripcion FROM Tipo_Copei WHERE Tipo = '4.1';");
 		$pdf->SetFont('Arial', '', 14);
-		$pdf->Multicell(0,5,"4.1  ".utf8_decode($result2[$parasoloundato]["Descripcion"]), 0, 'L');            
+                 $pdf->setFillColor(230,230,230); 
+		$pdf->Multicell(0,5,"4.1  ".utf8_decode($result2[$parasoloundato]["Descripcion"]),  0, 1,'L',1);            
 		$pdf->Ln();                                
 			
 		$pdf->SetFont('Arial', '', 10);
@@ -528,7 +742,7 @@ header("Content-Type: text/html; charset=iso-8859-1 ");
 				else
 					$cadena  = $cadena.", ";                          
 			}                    
-			$pdf->MultiCell(0,5,count($result4).utf8_decode(" art�culos (").$cadena." en ".utf8_decode($result3[$parasoloundato]["Nombre_Completo"]).", ISSN ".utf8_decode($result3[$parasoloundato]["ISSN"]).".", 0, 'L');                     
+			$pdf->MultiCell(0,5,count($result4).utf8_decode(" artï¿½culos (").$cadena." en ".utf8_decode($result3[$parasoloundato]["Nombre_Completo"]).", ISSN ".utf8_decode($result3[$parasoloundato]["ISSN"]).".", 0, 'L');                     
 			$pdf->SetFont('Arial', '', 10);                    
 			$pdf->MultiCell(0,5,"", 0, 'L');                                            
 		}                
@@ -548,7 +762,7 @@ header("Content-Type: text/html; charset=iso-8859-1 ");
                                                                       $pdf->SetFont('Arial', '', 15);
         $pdf->SetTextColor(51,51,255);
         $pdf->setFillColor(230,230,230); 
-			$pdf->Multicell(0,10,utf8_decode("4  Repercusión Académica."), 0, 1,'L',1);
+			$pdf->Multicell(0,10,utf8_decode("4  RepercusiÃ³n AcadÃ©mica."), 0, 1,'L',1);
 			$pdf->Ln();
 			$bandera = true;  
                          $pdf->SetTextColor(0,0,0);
@@ -597,7 +811,7 @@ header("Content-Type: text/html; charset=iso-8859-1 ");
                                                                               $pdf->SetFont('Arial', '', 15);
         $pdf->SetTextColor(51,51,255);
         $pdf->setFillColor(230,230,230); 
-				$pdf->Multicell(0,10,utf8_decode("4  Repercusión Académica."), 0, 1,'L',1);
+				$pdf->Multicell(0,10,utf8_decode("4  RepercusiÃ³n AcadÃ©mica."), 0, 1,'L',1);
 				$pdf->Ln();
 				$bandera = true; 
                                  $pdf->SetTextColor(0,0,0);
@@ -611,10 +825,14 @@ header("Content-Type: text/html; charset=iso-8859-1 ");
 				if($bandera2 == false)
 				{                        
 					$pdf->SetFont('Arial', '', 14);
-					$pdf->Multicell(0,5,$arrayarti[$arti]." ".utf8_decode($result[$x]["Descripcion"]), 0, 'L');            
+                                                $pdf->setFillColor(230,230,230); 
+					$pdf->Multicell(0,5,$arrayarti[$arti]." ".utf8_decode($result[$x]["Descripcion"]),  0, 1,'L',1);            
 					$pdf->Ln();
 					$bandera2 = true;                                        
 				}
+                                $ident=$x+1;
+                                $pdf->SetFont('Arial', '', 10);
+                                $pdf->MultiCell(0,5,$arrayarti[$arti].".".$ident, 0, 'L'); 
 				if($result[$x]["Congreso_Discutido_Estu_Miemb_Otorga_Respon"] != "" && $arrayarti[$arti] == "4.6" || $arrayarti[$arti] == "4.9" || $arrayarti[$arti] == "4.10")
 					$cadena  = $cadena.utf8_decode($result[$x]["Congreso_Discutido_Estu_Miemb_Otorga_Respon"]).", "; 
 				if($result[$x]["Fecha_Inicial"] != "" && $arrayarti[$arti] == "4.6")
@@ -660,20 +878,24 @@ header("Content-Type: text/html; charset=iso-8859-1 ");
                                                                       $pdf->SetFont('Arial', '', 15);
         $pdf->SetTextColor(51,51,255);
         $pdf->setFillColor(230,230,230); 
-				$pdf->Multicell(0,10,utf8_decode("4  Repercusión Académica."), 0, 1,'L',1);
+				$pdf->Multicell(0,10,utf8_decode("4  RepercusiÃ³n AcadÃ©mica."), 0, 1,'L',1);
 				$pdf->Ln();
 				$bandera = true; 
                                  $pdf->SetTextColor(0,0,0);
 			}
 			$pdf->SetFont('Arial', '', 14);
 			$result2 = $conexion->Consultas("SELECT Descripcion FROM Tipo_Copei WHERE Tipo = '4.12';");
-			$pdf->Multicell(0,5,"4.12  ".utf8_decode($result2[$parasoloundato]["Descripcion"]), 0, 'L');            
+                                $pdf->setFillColor(230,230,230); 
+			$pdf->Multicell(0,5,"4.12  ".utf8_decode($result2[$parasoloundato]["Descripcion"]), 0, 1,'L',1);            
 			$pdf->Ln();                
 			for($x = 0; $x < count($result); $x++)
 			{ 
 				$pdf->SetFont('Arial', '', 10);
 				$fecha_Inicial = explode("-", $result[$x]["Fecha_Inicial"]);
 				$fecha_Final = explode("-", $result[$x]["Fecha_Final"]);
+                                $ident=$x+1;
+                                $pdf->SetFont('Arial', '', 10);
+                                $pdf->MultiCell(0,5,"4.12.".$ident, 0, 'L'); 
 				if($result[$x]["Tipo_Responsable"] != "")
 					$pdf->MultiCell(0,5,utf8_decode($result[$x]["Tipo_Responsable"]), 0, 'L'); 
 				if($result[$x]["Titulo"] != "")
@@ -706,7 +928,7 @@ header("Content-Type: text/html; charset=iso-8859-1 ");
                                                              $pdf->SetFont('Arial', '', 15);
         $pdf->SetTextColor(51,51,255);
         $pdf->setFillColor(230,230,230); 
-				$pdf->Multicell(0,10,utf8_decode("4  Repercusión Académica."), 0, 1,'L',1);
+				$pdf->Multicell(0,10,utf8_decode("4  RepercusiÃ³n AcadÃ©mica."), 0, 1,'L',1);
 				$pdf->Ln();
 				$bandera = true;    
                                  $pdf->SetTextColor(0,0,0);
@@ -720,10 +942,14 @@ header("Content-Type: text/html; charset=iso-8859-1 ");
 				if($bandera2 == false)
 				{                        
 					$pdf->SetFont('Arial', '', 14);
-					$pdf->Multicell(0,5,$arrayarti[$arti]." ".utf8_decode($result[$x]["Descripcion"]), 0, 'L');            
+                                        $pdf->setFillColor(230,230,230); 
+					$pdf->Multicell(0,5,$arrayarti[$arti]." ".utf8_decode($result[$x]["Descripcion"]), 0, 1,'L',1);            
 					$pdf->Ln();
 					$bandera2 = true;                                        
 				}
+                                  $ident=$x+1;
+                                $pdf->SetFont('Arial', '', 10);
+                                $pdf->MultiCell(0,5,$arrayarti[$arti].".".$ident, 0, 'L');
 				if($result[$x]["Congreso_Discutido_Estu_Miemb_Otorga_Respon"] && $arrayarti[$arti] == "4.13")
 					$cadena  = $cadena.utf8_decode($result[$x]["Congreso_Discutido_Estu_Miemb_Otorga_Respon"]).", "; 
 				if($result[$x]["SNI_ISSN_NoPatente_Subpro"] != "" && $arrayarti[$arti] == "4.13")
@@ -753,7 +979,7 @@ header("Content-Type: text/html; charset=iso-8859-1 ");
 	unset($result2); 
 	 
 	//   5
-	$result= $conexion->Consultas("SELECT Descripcion, Fecha, Etiqueta_Copei FROM Criterio WHERE Criterio.Fecha > '".$inicial[0]."-".$inicial[1]."-".$inicial[2]."' AND FK_Usuario = ".$id_usuario.";");
+	$result= $conexion->Consultas("SELECT Descripcion, Fecha, Etiqueta_Copei FROM Criterio WHERE Criterio.Fecha > '".$inicial[0]."-".$inicial[1]."-".$inicial[2]."' AND FK_Usuario = ".$id_usuario." order by Etiqueta_Copei;");
 	if(count($result) > 0)
 	{ 
 		                                                               $pdf->SetFont('Arial', '', 15);
@@ -782,3 +1008,4 @@ header("Content-Type: text/html; charset=iso-8859-1 ");
         
 	$pdf->Output('Curriculum_Vitae.pdf', 'I'); 
 ?>
+
