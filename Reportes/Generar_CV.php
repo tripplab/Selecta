@@ -368,7 +368,7 @@ header("Content-Type: text/html; charset=iso-8859-1 ");
 	{
         
 		$bandera2 = false;  
-           	$result = $conexion->Consultas("SELECT Curso.Nombre AS Nombre_Curso, Programa_Academico.Nombre_Programa,Formacion_Curso.Propedeutico,Formacion_Curso.Nivel_AnioLic,Formacion_Curso.Total_Horas,Formacion_Curso.Fecha_Inicial,Formacion_Curso.Fecha_Final ,tipo_copei.Tipo,Tipo_Copei.Descripcion,Formacion_Curso.Etiqueta_Copei FROM Curso, Programa_Academico,Formacion_Curso,Usuario,Tipo_Copei where Curso.FK_Programa=programa_academico.ID_Programa AND Usuario.ID_Usuario = ".$id_usuario." AND Formacion_Curso.FK_Curso=Curso.ID_Curso AND Formacion_Curso.FK_Tipo=Tipo_Copei.ID_Tipo and Tipo_Copei.Tipo = '".$arrayarti[$arti]."' ORDER BY Formacion_Curso.Etiqueta_Copei;");
+           	$result = $conexion->Consultas("SELECT Curso.Nombre AS Nombre_Curso, Programa_Academico.Nombre_Programa,Formacion_Curso.Propedeutico,Formacion_Curso.Nivel_AnioLic,Formacion_Curso.Total_Horas,Formacion_Curso.Fecha_Inicial,Formacion_Curso.Fecha_Final ,tipo_copei.Tipo,Tipo_Copei.Descripcion,Formacion_Curso.Etiqueta_Copei FROM Curso, Programa_Academico,Formacion_Curso,Usuario,Tipo_Copei where Curso.FK_Programa=programa_academico.ID_Programa AND Usuario.ID_Usuario = ".$id_usuario." AND Formacion_Curso.FK_Curso=Curso.ID_Curso AND Formacion_Curso.FK_Usuario=".$id_usuario." AND Formacion_Curso.FK_Tipo=Tipo_Copei.ID_Tipo and Tipo_Copei.Tipo = '".$arrayarti[$arti]."' ORDER BY Formacion_Curso.Etiqueta_Copei;");
  
 //		$result = $conexion->Consultas("SELECT Curso.Nombre AS Nombre_Curso, Formacion_Curso.Propedeutico, Formacion_Curso.Nivel_AnioLic, ". "Tipo_Copei.Tipo, Programa_Academico.Nombre_Programa, Formacion_Curso.Total_Horas, Institucion.Nombre AS Nombre_Institucion, Tipo_Copei.Descripcion, ". "Unidad.Nombre AS Nombre_Unidad, Formacion_Curso.Fecha_Inicial, Formacion_Curso.Fecha_Final, Etiqueta_Copei FROM Formacion_Curso, Curso, Tipo_Copei, ". "Programa_Academico, Institucion, Unidad, Unidad_Departamento,Usuario WHERE Tipo_Copei.Tipo = '".$arrayarti[$arti]."' ". "AND Formacion_Curso.Fecha_Inicial > '".$fechaIni."' AND Formacion_Curso.Fecha_Final < '".$fechaTer."' AND ID_Institucion = FK_Institucion AND ID_Unidad = FK_Unidad AND ID_Unidad_Departamento = FK_Unidad_Departamento ". "AND Usuario.ID_Usuario = ".$id_usuario." ORDER BY Formacion_Curso.Etiqueta_Copei;");
                 if(count($result) > 0)
@@ -393,7 +393,7 @@ header("Content-Type: text/html; charset=iso-8859-1 ");
 					$bandera2 = true; 
                                         $pdf->SetTextColor(0,0,0);
                                         
-                            $resultado = $conexion->Consultas("SELECT Curso.Nombre AS Nombre_Curso, Programa_Academico.Nombre_Programa,Formacion_Curso.Propedeutico,Formacion_Curso.Nivel_AnioLic,Formacion_Curso.Total_Horas,Formacion_Curso.Fecha_Inicial,Formacion_Curso.Fecha_Final ,Tipo_Copei.Tipo,Tipo_Copei.Descripcion,Formacion_Curso.Etiqueta_Copei,Curso.ID_Curso,Formacion_Curso.FK_Curso FROM Curso, Programa_Academico,Formacion_Curso,Usuario,Tipo_Copei where Curso.FK_Programa=Programa_Academico.ID_Programa AND Usuario.ID_Usuario = ".$id_usuario." AND Formacion_Curso.FK_Curso=Curso.ID_Curso AND Formacion_Curso.FK_Tipo=Tipo_Copei.ID_Tipo and Tipo_Copei.Tipo = '3.1.a' ORDER BY Formacion_Curso.Etiqueta_Copei;");
+                            $resultado = $conexion->Consultas("SELECT Curso.Nombre AS Nombre_Curso, Programa_Academico.Nombre_Programa,Formacion_Curso.Propedeutico,Formacion_Curso.Nivel_AnioLic,Formacion_Curso.Total_Horas,Formacion_Curso.Fecha_Inicial,Formacion_Curso.Fecha_Final ,Tipo_Copei.Tipo,Tipo_Copei.Descripcion,Formacion_Curso.Etiqueta_Copei,Curso.ID_Curso,Formacion_Curso.FK_Curso FROM Curso, Programa_Academico,Formacion_Curso,Usuario,Tipo_Copei where Curso.FK_Programa=Programa_Academico.ID_Programa AND AND Formacion_Curso.FK_Usuario=".$id_usuario." Usuario.ID_Usuario = ".$id_usuario." AND Formacion_Curso.FK_Curso=Curso.ID_Curso AND Formacion_Curso.FK_Tipo=Tipo_Copei.ID_Tipo and Tipo_Copei.Tipo = '3.1.a' ORDER BY Formacion_Curso.Etiqueta_Copei;");
  
 
 
@@ -412,7 +412,7 @@ $pdf->Cell(100,6,'LISTA DE PROGRAMAS',1,0,'C');
  
 			$pdf->MultiCell(0,5,"", 0, 'L');  
 			$pdf->Ln();
-$resultProgramas = $conexion->Consultas("SELECT distinct Curso.Nombre,Programa_Academico.Nombre_Programa from  Curso,Formacion_Curso,Programa_Academico where Formacion_Curso.FK_Curso=Curso.ID_Curso AND Formacion_Curso.FK_Usuario=".$id_usuario." AND FK_Tipo=50 and Curso.FK_Programa=Programa_Academico.ID_programa order by FK_Programa DESC; ");        
+$resultProgramas = $conexion->Consultas("SELECT distinct Curso.Nombre,Programa_Academico.Nombre_Programa from  Curso,Formacion_Curso,Programa_Academico where Formacion_Curso.FK_Curso=Curso.ID_Curso AND Formacion_Curso.FK_Usuario=".$id_usuario." AND FK_Tipo=50 AND Formacion_Curso.FK_Usuario=".$id_usuario." and Curso.FK_Programa=Programa_Academico.ID_programa order by FK_Programa DESC; ");        
 
 $acum="";
 $arrayAsociaP=array();
@@ -520,7 +520,7 @@ $pdf->Ln(15);
 $TotalHrs="Horas";
 $pdf->Cell(15,15,$TotalHrs,1,0,'L',0);
 
-$resultadoSuma = $conexion->Consultas("SELECT SUM(Formacion_Curso.Total_Horas) as total  FROM Curso, Programa_Academico,Formacion_Curso,Usuario,Tipo_Copei where Curso.FK_Programa=Programa_Academico.ID_Programa AND Usuario.ID_Usuario = ".$id_usuario." AND Formacion_Curso.FK_Curso=curso.ID_Curso AND Formacion_Curso.FK_Tipo=Tipo_Copei.ID_Tipo and Tipo_Copei.Tipo = '3.1.a' ORDER BY Formacion_Curso.Etiqueta_Copei;");	
+$resultadoSuma = $conexion->Consultas("SELECT SUM(Formacion_Curso.Total_Horas) as total  FROM Curso, Programa_Academico,Formacion_Curso,Usuario,Tipo_Copei where Curso.FK_Programa=Programa_Academico.ID_Programa AND Usuario.ID_Usuario = ".$id_usuario." AND Formacion_Curso.FK_Curso=curso.ID_Curso AND Formacion_Curso.FK_Usuario=".$id_usuario." AND Formacion_Curso.FK_Tipo=Tipo_Copei.ID_Tipo and Tipo_Copei.Tipo = '3.1.a' ORDER BY Formacion_Curso.Etiqueta_Copei;");	
 
 
 
@@ -536,7 +536,7 @@ $pdf->Cell(20,15,$TotalCantidad,1,0,'L',0);
 //               $cursoInd= $curso1[1];
 //             $cursoIndi=utf8_decode($cursoInd);
              
-           $resultadoIndiv = $conexion->Consultas("SELECT SUM(Formacion_Curso.Total_Horas) as totalInd  FROM Curso, Programa_Academico,Formacion_Curso,Usuario,Tipo_Copei where Curso.FK_Programa=Programa_Academico.ID_Programa AND Usuario.ID_Usuario =".$id_usuario." AND Formacion_Curso.FK_Curso=Curso.ID_Curso AND Formacion_Curso.FK_Tipo=Tipo_Copei.ID_Tipo and Tipo_Copei.Tipo = '3.1.a' AND Curso.Nombre='".utf8_encode($curso1[1])."' ORDER BY Formacion_Curso.Etiqueta_Copei;");	
+           $resultadoIndiv = $conexion->Consultas("SELECT SUM(Formacion_Curso.Total_Horas) as totalInd  FROM Curso, Programa_Academico,Formacion_Curso,Usuario,Tipo_Copei where Curso.FK_Programa=Programa_Academico.ID_Programa AND Usuario.ID_Usuario =".$id_usuario." AND Formacion_Curso.FK_Usuario=".$id_usuario." AND Formacion_Curso.FK_Curso=Curso.ID_Curso AND Formacion_Curso.FK_Tipo=Tipo_Copei.ID_Tipo and Tipo_Copei.Tipo = '3.1.a' AND Curso.Nombre='".utf8_encode($curso1[1])."' ORDER BY Formacion_Curso.Etiqueta_Copei;");	
        $TotalHoraInd=$resultadoIndiv[0]["totalInd"];
 $pdf->Cell(15,15,$TotalHoraInd,1,0,'L',0);
 
