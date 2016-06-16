@@ -445,6 +445,26 @@
 									}
 								?>
 								
+                                                                <?php 
+									if($_SESSION["Rol"]=="sin rol" || (isset($_SESSION['ID']) && $id == $_SESSION["ID"]))
+									{
+								?>
+											<?php 
+														 
+															echo "<script>
+																$('.boton_si_au').hide();
+                                                                                                                                $('.boton_editar').hide();
+																$('.boton_no_au').hide();
+															        $('.subir_archivo').hide();
+                                                                                                                                  $('.descargar_archivo').hide();
+                                                                                                                             </script>";
+														
+															
+													?>
+												
+								<?php
+									}
+								?>
 							</div>
 						</div>
 					</div>
