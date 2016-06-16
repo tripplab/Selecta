@@ -8,6 +8,8 @@
                 $conexion = new Querys();
 		$id = (isset($_GET["i"])) ? $_GET["i"]: $_SESSION["ID"];
 		$_SESSION["Usuario_Temporal"] = $id;
+                 
+              
                 
                  if(is_numeric($id)) {
           $id = (isset($_GET["i"])) ? $_GET["i"]: $_SESSION["ID"];
@@ -27,6 +29,7 @@
        $id=$idi[0]["ID_Usuario"];
        
 		$_SESSION["Usuario_Temporal"] = $id;
+                $_SESSION["Rol"]="sin rol";
       }
       else{
           echo"<script>alert('No se puede encontrar ese usuario')</script>";
