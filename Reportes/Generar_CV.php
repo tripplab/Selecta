@@ -3,8 +3,8 @@ error_reporting(0);
 header("Content-Type: text/html; charset=iso-8859-1 ");
 	session_start();
 	$id_usuario = $_SESSION['ID']; 
-	$inicial = ($_GET["i"] == "AÃ±o-Mes-DÃ­a") ? "1900-00-00" : $_GET["i"];
-	$final =  ($_GET["f"] == "AÃ±o-Mes-DÃ­a") ? "2050-00-00" : $_GET["f"];
+	$inicial = ($_GET["i"] == "Año-Mes-Día") ? "1900-00-00" : $_GET["i"];
+	$final =  ($_GET["f"] == "Año-Mes-Día") ? "2050-00-00" : $_GET["f"];
      
         
         
