@@ -102,8 +102,13 @@ $.verificar_fecha = function(entrar, n_div_1, n_div_2, dia_1, mes_1, anio_1, dia
 $.fn.most_ocul_form_prod = function(tipo, titulo)
 {
 	var partes = tipo.split(".");
-	$.post("../Scripts/consulta.php", {opcion: "nombre"}, function(data){
-		$("#autores").val(data);
+	$.post("../Scripts/consulta.php", {opcion: "nombre" }, function(data){
+		$("#autores").val(data); 
+                
+	});
+        
+        $.post("../Scripts/consulta.php", {opcion: "Titule", Type:tipo}, function(data){
+		$("#Name_producto").val(data);
                 
 	});
 	//$("#titulo").removeClass("quitar_margen");
@@ -121,6 +126,7 @@ $.fn.most_ocul_form_prod = function(tipo, titulo)
 	$("#num").attr("placeholder", "Numero");
 	$("#pag").attr("placeholder", "Pagina(s)");
 	$("#autor_l").text("Autores *");
+        
 	$("#cita_l").text("Cita");
 	$("#fecha_l").text("Fecha *");
 	$("#capitulo_l").text("Conferencia *");
@@ -187,6 +193,10 @@ $.fn.most_ocul_form_prod = function(tipo, titulo)
 		$("#localidad_l").text("Lugar *");
 		$("#referencia_l").text("Alumno *");
 	}
+        else if(tipo == "3.3")
+	{
+            $("#nivel2").show();
+        }
 	else if(tipo == "4.6")
 	{
 		$("#capitulo_l").text("Miembro");
@@ -306,9 +316,9 @@ $.fn.most_ocul_form_prod = function(tipo, titulo)
 		$(".a_16").show();	
 	else if(tipo == "3.1.c")
 	{
-		$("#nivel").hide();
-		$("#anio_lic").show();
-		$("#datos_l").text("Propedeútico/Año Lic.");
+		$("#nivel").show();
+		$("#anio_lic").hide();
+		
 	}	
 	else if(tipo == "4.5" || tipo == "4.6" || tipo == "4.9" || tipo == "4.12" || tipo == "4.13" || tipo == "2.1.c" || tipo == "2.1.d")
 		$(".a_8").show();	
@@ -355,6 +365,27 @@ $.fn.most_ocul_form_prod = function(tipo, titulo)
         {
 		
             $(".a_autores1").hide();
+        }
+        if(tipo == "3.1.a"){
+            $("#institucion").val("Centro de Investigación de Estudios Avanzados");
+            $("#nivel2").hide();
+             
+        }
+         if(tipo == "3.1.b"  ){
+            $("#institucion").val("");
+             $("#nivel2").hide();
+        }
+         if(tipo == "3.1.c" ){
+            $("#institucion").val("");
+            
+        }
+         if(tipo == "3.2.a" || tipo == "3.2.b"){
+       
+             $("#nivel2").hide();
+        }
+         if(tipo == "3.3" ){
+           
+             $("#nivel2").show();
         }
 	if((partes[0] == "3" && (partes[1] == "1")) || partes[0] == "4"|| tipo == "0.2" || tipo == "0.3" || tipo == "1.2")
 		$(".a_7").show();
@@ -543,7 +574,7 @@ $(document).ready(function()
 		if(partes[0] == "0" || partes[0] == "1" || tipo == "2_5" || tipo == "4_2" || tipo == "4_3" || tipo == "4_4" || tipo == "4_5" || tipo == "4_6" || tipo == "4_7" || tipo == "4_8" || tipo == "4_9" || tipo == "4_10" || tipo == "4_11" || tipo == "4_13" || tipo == "4_14" || tipo == "4_15" || tipo == "4_16" || tipo == "4_17" || tipo == "4_18" || tipo == "2_2" || tipo == "2_3" || tipo == "2_4" || tipo == "2_9" || tipo == "3_3" || tipo == "4_12")
 		{
 			$(".agrandar").attr("disabled", false);
-			
+	 		
 			var tipo = $("#tipo_copei").val();
 			var titulo = ($("#aceptar_titulo").val() == "si") ? $("#textarea_titulo").val() : "";
 			var partes = tipo.split(".");
