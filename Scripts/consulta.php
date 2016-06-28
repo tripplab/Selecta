@@ -30,6 +30,15 @@
 			$nombre = $nombre[0];
 			echo $nombre["Nombre"]." ".$nombre["Apellido_Paterno"]."-".$nombre["Apellido_Materno"];
 		break;
+                case "Titule":
+                    $type1=$_POST["Type"];
+                
+			$titule1 = $conexion->Consultas("SELECT Descripcion FROM Tipo_Copei WHERE Tipo = '$type1'");
+			$titule1 = $titule1[0];
+			echo $titule1[0];
+		break;
+            
+            
 		case "matches":
 			switch($_POST['tipo'])
 			{
@@ -88,7 +97,7 @@
 						echo '</li>';
 						unset($autor);
 					}
-					if(count($tesis) > 0)
+					if(count($tesis) > 0) 
 						agregar_nuevo_matche();
 				break;
 				case "4.12":
@@ -134,7 +143,7 @@
 					echo json_encode($datos);
 				break;
 				case "2.1.a": case "2.1.b": case "2.1.c": case "2.1.d": case "2.1.e": case "2.1.f": case "2.1.g": case "2.2": case "2.3":
-				case "2.4": case "2.5": case "2.7.a": case "2.7.b": case "2.7.c": case "2.7.d":case "2.7.e":case "2.7.f": case "2.8.a": case "2.8.b": case "2.8.c":
+				case "2.4": case "2.5": case "2.7.a": case "2.7.b": case "2.7.c": case "2.7.d": case "2.7.e": case "2.7.f": case "2.8.a": case "2.8.b": case "2.8.c":
 				case "2.8.d": case "2.8.e": case "2.8.f": case "2.9": case "2.10.a": case "2.10.b": case "2.10.c": case "2.11.a": 
 				case "2.11.b": case "2.11.c": case "2.12.a": case "2.12.b": case "2.12.c": case "2.12.d":
 					$datos = $conexion->Consultas("SELECT Titulo, Conferencia_Capitulo as Capitulo, Impacto_TituloLibro as Titulo_Libro, Tema, Abstract, No_Referencia_Rerporte as Referencia, Volumen as Vol, Numero as Num, Paginas as Pag, Editor, Editorial_Afiliacion as Editorial, Edicion, ISBN, DOI, Numero_Citas, Localidad_PagWeb as Localidad, Estado,Fecha, FK_Tesis, FK_Journal FROM Articulos WHERE ID_Articulo = ".$_POST['id']);
@@ -331,9 +340,9 @@
 			echo json_encode($datos[0]);
 		break;
 		case "Logeo":
-			$user=$_POST["usuario"];
-			$pass=$_POST["contrasenia"];
-			
+                    
+                    $user=$_POST["usuario"];
+                    $pass=$_POST["contrasenia"];
 			$usuario = $conexion->Consultas("SELECT COUNT(Nick) as Nick FROM Usuario WHERE Nick LIKE '".$user."'");
 			if($usuario[0]["Nick"] > 0)
 			{
