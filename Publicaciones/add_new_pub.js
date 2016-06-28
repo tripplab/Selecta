@@ -764,7 +764,7 @@ $(document).ready(function()
 		entrar = $.errores_uno(entrar, "#capi_div", "#capitulo", "#capitulo_l", "Conferencia *");
 		entrar = $.errores_uno(entrar, "#referencia_div", "#referencia", "#referencia_l", "Alumno *");
 		entrar = $.errores_lista(entrar, "#institucion_div", "#institucion");
-		entrar = $.errores_lista(entrar, "#unidad_div", "#unidad");
+	//	entrar = $.errores_lista(entrar, "#unidad_div", "#unidad");
 		entrar = $.errores_lista(entrar, "#programa_div", "#programa");
 		entrar = $.errores_lista(entrar, "#curso_div", "#curso");
                 entrar = $.errores_lista(entrar, "#Estado_div", "#stado");
