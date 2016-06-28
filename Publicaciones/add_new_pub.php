@@ -1,3 +1,4 @@
+
 <html>
 	<head>
 		<script src="../Publicaciones/add_new_pub.js"></script>
@@ -133,19 +134,24 @@
 						<input type="hidden" value="copei" name="opcion">
 						<input type="hidden" value="" name="guar_act" id="guar_act_copei">
 						<input type="hidden" value="" name="tipo_copei_esc" id="tipo_copei_esc">
-						<input type="hidden" value="" name="titulo_esc" id="titulo_esc">
+                                                <input type="hidden" value="" name="titulo_esc" id="titulo_esc">
 						<div class="contenedor_js"><!--js-widgetcontainer-->
 							<div class="titulo_publicacion arreglar_limpiar titulo"><!--publication-tittle clearfix-->
-                                                            <strong id="tipo_producto">Producto </strong><input type="text" style="width: 680px;" name="tipo_copei" id="tipo_copei_" class="texto quitar_margen" disabled="disabled" >
+                                                              <center>
+                                                            <strong id="tipo_producto">Producto </strong><input type="text" style="width: 680px;" name="tipo_copei" id="tipo_copei_" class="texto quitar_margen" disabled="disabled"  >
+                                                    
+                                                           <input type="textbox" id="Name_producto" style="width: 620px;" name="Name_producto"  class="texto quitar_margen" disabled="disabled" >
+                                                            </center>
                                                               
-								<div class="control_grupo a_titulo" id="titule"><!--control-grupo-->
-									<label class="label_control" id="titulo_l"> *</label>
+								
+                                                                
+							</div>
+                                                    <div class="control_grupo a_titulo" id="titule"><!--control-grupo-->
+									<label class="label_control" id="titulo_l">Titulo *</label>
 									<div class="controles"><!--controls-->
                                                                             <input type="text" name="titulo" id="titulo" class="texto" >
 									</div>
 								</div>
-                                                                
-							</div>
                                                   <div  id='Estado_div' name='Estado_div' class="control_grupo autores a_autores1"><!--control-grupo-->
 								
 								<strong >Estado * </strong>
@@ -181,7 +187,8 @@
 								<input type="hidden" id="id_institucion" name="id_institucion">
 								<div class="controles"><!--controls-->
 									<input type="textbox" id="institucion" placeholder="Teclea el nombre de la Institución y elige la opcion correcta de la lista" style="width: 620px;" maxlength="255" class="texto" name="institucion">
-									<div id="cargar_lista_institucion" class="yu_widget yu_listaac yu_posicionado_widget yu_aclista_escondida" aria-hidden="true" style="width: 621px; left: 160px;"><!--yui3-gidget yui3-aclist yui3-widget-positionated yui3-aclist-hidden-->
+									
+                                                                        <div id="cargar_lista_institucion" class="yu_widget yu_listaac yu_posicionado_widget yu_aclista_escondida" aria-hidden="true" style="width: 621px; left: 160px;"><!--yui3-gidget yui3-aclist yui3-widget-positionated yui3-aclist-hidden-->
 										<div class="yu_aclista_contenedor"><!--yui3-aclist-container-->
 											<ul class="yu_lista_aclista" role="listbox" id="contenedor_institucion"><!--yui3-aclist-list-->
 											</ul>
@@ -206,8 +213,11 @@
 								<label class="label_control">Programa *</label>
 								<input type="hidden" id="id_programa" name="id_programa">
 								<div class="controles"><!--controls-->
-									<input type="textbox" id="programa" placeholder="Teclea el nombre del Programa y elige la opcion correcta de la lista" style="width: 620px;" maxlength="255" class="texto" name="programa">
-									<div id="cargar_lista_programa" class="yu_widget yu_listaac yu_posicionado_widget yu_aclista_escondida" aria-hidden="true" style="width: 621px; left: 160px;"><!--yui3-gidget yui3-aclist yui3-widget-positionated yui3-aclist-hidden-->
+									
+                                                                    <input type="textbox" id="programa" placeholder="Teclea el nombre del Programa y elige la opcion correcta de la lista" style="width: 620px;" maxlength="255" class="texto" name="programa">
+									
+                                                                        
+                                                                        <div id="cargar_lista_programa" class="yu_widget yu_listaac yu_posicionado_widget yu_aclista_escondida" aria-hidden="true" style="width: 621px; left: 160px;"><!--yui3-gidget yui3-aclist yui3-widget-positionated yui3-aclist-hidden-->
 										<div class="yu_aclista_contenedor"><!--yui3-aclist-container-->
 											<ul class="yu_lista_aclista" role="listbox" id="contenedor_programa"><!--yui3-aclist-list-->
 											</ul>
@@ -342,9 +352,18 @@
 												</td>
 												<td align="right">
 													<select style="width: 200px; font-size: 12px;" id="nivel" name="nivel">
-														<option value="Posgrado">Posgrado</option>
+														<option value="Nivel">Nivel</option>
 														<option value="Maestría">Maestría</option>
 														<option value="Doctorado">Doctorado</option>
+                                                                                                                <option value="Ambos">Ambos</option>
+													</select>
+                                                                                                    
+                                                                                                     <select style="width: 200px; font-size: 12px;" id="nivel2" name="nivel2">
+														<option value="Nivel">Nivel</option>
+														<option value="Licenciatura">Licenciatura</option>
+														
+                                                                                                                <option value="Maestria">Maestria</option>
+                                                                                                                <option value="Doctorado">Doctorado</option>
 													</select>
 													<input type="textbox" id="anio_lic" style="width: 200px;" maxlength="255" class="texto" name="anio_lic"><!--text-->
 												</td>
