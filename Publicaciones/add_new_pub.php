@@ -197,7 +197,7 @@
 								</div>
 							</div>
 							<div class="control_grupo a_5" id="unidad_div"><!--control-grupo-->
-								<label class="label_control">Unidad *</label>
+								<label class="label_control">Unidad</label>
 								<input type="hidden" id="id_unidad" name="id_unidad">
 								<div class="controles"><!--controls-->
 									<input type="textbox" id="unidad" placeholder="Teclea el nombre de la Unidad y elige la opcion correcta de la lista" style="width: 620px;" maxlength="255" class="texto" name="unidad">
