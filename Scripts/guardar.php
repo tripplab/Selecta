@@ -31,7 +31,7 @@
 						$conexion->Guardar("UPDATE Categoria SET Categoria = '".$_POST['vol']."', Subcategoria = '".$_POST['num']."', Puesto = '".$_POST['localidad']."', Fecha = '".$_POST['anio_pub']."-".$_POST['mes_pub']."-".$_POST['dia_pub']."' WHERE ID_Promocion = ".$_POST['guar_act']);
 				break;
 				case "2.1.a": case "2.1.b": case "2.1.c": case "2.1.d": case "2.1.e": case "2.1.f": case "2.1.g": case "2.2": case "2.3":
-				case "2.4": case "2.5": case "2.7.a": case "2.7.b": case "2.7.c": case "2.7.d": case "2.8.a": case "2.8.b": case "2.8.c":
+				case "2.4": case "2.5": case "2.7.a": case "2.7.b": case "2.7.c": case "2.7.d":case "2.7.e":case "2.7.f": case "2.8.a": case "2.8.b": case "2.8.c":
 				case "2.8.d": case "2.8.e": case "2.8.f": case "2.9": case "2.10.a": case "2.10.b": case "2.10.c": case "2.11.a": 
 				case "2.11.b": case "2.11.c": case "2.12.a": case "2.12.b": case "2.12.c": case "2.12.d":
 					$tipo_copei = $conexion->Consultas("SELECT ID_Tipo FROM Tipo_Copei WHERE Tipo LIKE '".$_POST['tipo_copei_esc']."'");
@@ -183,7 +183,7 @@
 			switch($_POST["tipo"])
 			{
 				case "2.1.a": case "2.1.b": case "2.1.c": case "2.1.d": case "2.1.e": case "2.1.f": case "2.1.g": case "2.2": case "2.3":
-				case "2.4": case "2.5": case "2.7.a": case "2.7.b": case "2.7.c": case "2.7.d": case "2.8.a": case "2.8.b": case "2.8.c":
+				case "2.4": case "2.5": case "2.7.a": case "2.7.b": case "2.7.c": case "2.7.d":  case "2.7.e": case "2.7.f": case "2.8.a": case "2.8.b": case "2.8.c":
 				case "2.8.d": case "2.8.e": case "2.8.f": case "2.9": case "2.10.a": case "2.10.b": case "2.10.c": case "2.11.a": 
 				case "2.11.b": case "2.11.c": case "2.12.a": case "2.12.b": case "2.12.c": case "2.12.d": case "5":
 					$carpeta = "../Archivos/Articulos/";
@@ -214,7 +214,7 @@
 			switch($_POST["tipo"])
 			{
 				case "2.1.a": case "2.1.b": case "2.1.c": case "2.1.d": case "2.1.e": case "2.1.f": case "2.1.g": case "2.2": case "2.3":
-				case "2.4": case "2.5": case "2.7.a": case "2.7.b": case "2.7.c": case "2.7.d": case "2.8.a": case "2.8.b": case "2.8.c":
+				case "2.4": case "2.5": case "2.7.a": case "2.7.b": case "2.7.c": case "2.7.d":  case "2.7.e": case "2.7.f":case "2.8.a": case "2.8.b": case "2.8.c":
 				case "2.8.d": case "2.8.e": case "2.8.f": case "2.9": case "2.10.a": case "2.10.b": case "2.10.c": case "2.11.a": 
 				case "2.11.b": case "2.11.c": case "2.12.a": case "2.12.b": case "2.12.c": case "2.12.d":
 					$conexion->Guardar("CALL Etiqueta_Articulos_Editar_SP(".$_POST["identificador"].", ".$_SESSION["Usuario_Temporal"].", ".$_POST["etiqueta"].")");
@@ -243,7 +243,7 @@
 					$conexion->Eliminar("DELETE FROM Categoria WHERE ID_Promocion = ".$_POST["id"]);
 				break;
 				case "2.1.a": case "2.1.b": case "2.1.c": case "2.1.d": case "2.1.e": case "2.1.f": case "2.1.g": case "2.2": case "2.3":
-				case "2.4": case "2.5": case "2.7.a": case "2.7.b": case "2.7.c": case "2.7.d": case "2.8.a": case "2.8.b": case "2.8.c":
+				case "2.4": case "2.5": case "2.7.a": case "2.7.b": case "2.7.c": case "2.7.d":  case "2.7.e": case "2.7.f": case "2.8.a": case "2.8.b": case "2.8.c":
 				case "2.8.d": case "2.8.e": case "2.8.f": case "2.9": case "2.10.a": case "2.10.b": case "2.10.c": case "2.11.a": 
 				case "2.11.b": case "2.11.c": case "2.12.a": case "2.12.b": case "2.12.c": case "2.12.d":
 					$conexion->Guardar("CALL Etiqueta_Articulos_Eliminar_SP(".$_POST["id"].", ".$_SESSION["Usuario_Temporal"].")");
