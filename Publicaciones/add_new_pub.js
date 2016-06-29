@@ -673,7 +673,7 @@ $(document).ready(function()
 				$.post("../Scripts/consulta_listado.php", {opcion: "institucion", nombre: $("#institucion").val()}, function(data){
 					$("#contenedor_institucion").html(data);
 				});
-		}, 1000);
+		}, 5);
 	});
 	
 	$("#unidad").keyup(function(){
@@ -684,7 +684,7 @@ $(document).ready(function()
 				$.post("../Scripts/consulta_listado.php", {opcion: "unidad", institucion: $("#id_institucion").val(), nombre: $("#unidad").val()}, function(data){
 					$("#contenedor_unidad").html(data);
 				});
-		}, 1000);
+		}, 5);
 	});
 	
 	$("#programa").keyup(function(){
@@ -695,7 +695,7 @@ $(document).ready(function()
 				$.post("../Scripts/consulta_listado.php", {opcion: "programa", unidad: $("#id_unidad").val(), nombre: $("#programa").val()}, function(data){
 					$("#contenedor_programa").html(data);
 				});
-		}, 1000);
+		}, 5);
 	});
 	
 	$("#curso").keyup(function(){
@@ -706,7 +706,7 @@ $(document).ready(function()
 				$.post("../Scripts/consulta_listado.php", {opcion: "curso", programa: $("#id_programa").val(), nombre: $("#curso").val()}, function(data){
 					$("#contenedor_curso").html(data);
 				});
-		}, 1000);
+		}, 5);
 	});
 	
 	$("#tesis").keyup(function(){
@@ -717,7 +717,7 @@ $(document).ready(function()
 				$.post("../Scripts/consulta_listado.php", {opcion: "tesis", nombre: $("#tesis").val()}, function(data){
 					$("#contenedor_tesis").html(data);
 				});
-		}, 1000);
+		}, 5);
 	});
 	
 	$("#usuario").keyup(function(){
@@ -728,7 +728,7 @@ $(document).ready(function()
 				$.post("../Scripts/consulta_listado.php", {opcion: "usuario_profesor", nombre: $("#usuario").val()}, function(data){
 					$("#contenedor_usuario").html(data);
 				});
-		}, 1000);
+		}, 5);
 	});
 	
 	$(".uno_por_uno .barra_footer .link_accion_regresar").click(function(){
@@ -764,7 +764,7 @@ $(document).ready(function()
 		entrar = $.errores_uno(entrar, "#capi_div", "#capitulo", "#capitulo_l", "Conferencia *");
 		entrar = $.errores_uno(entrar, "#referencia_div", "#referencia", "#referencia_l", "Alumno *");
 		entrar = $.errores_lista(entrar, "#institucion_div", "#institucion");
-	//	entrar = $.errores_lista(entrar, "#unidad_div", "#unidad");
+		//entrar = $.errores_lista(entrar, "#unidad_div", "#unidad");
 		entrar = $.errores_lista(entrar, "#programa_div", "#programa");
 		entrar = $.errores_lista(entrar, "#curso_div", "#curso");
                 entrar = $.errores_lista(entrar, "#Estado_div", "#stado");
