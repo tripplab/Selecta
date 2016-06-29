@@ -49,28 +49,14 @@
 						echo '</li>';
 					}
 				break;
-				case "programa1":
-					$programa = $conexion->Consultas("SELECT Nombre_Programa, ID_Programa_Unidad FROM Programa_Academico, Programa_Unidad WHERE Nombre_Programa LIKE '%".$_POST["nombre"]."%' AND ID_Programa = FK_Programa AND FK_Unidad = ".$_POST["unidad"]);
-					for($i = 0; $i < count($programa); $i++)
-					{
-						echo '<li class="yu_tema_aclista listado_programa" role="option" data-text="'.$programa[$i]["Nombre_Programa"].'" data-type="'.$programa[$i]["ID_Programa_Unidad"].'">';
-						echo '<div class="ac_journal">';
-						echo '<span class="lf">'.$programa[$i]["Nombre_Programa"].'</span>';
-					 	echo '<div class="limpiar"></div>';
-						echo '</div>';
-						echo '</li>';
-					}
-				break;
+				
                                 case "programa":
 					$programa = $conexion->Consultas("SELECT Nombre_Programa, ID_Programa FROM Programa_Academico WHERE Nombre_Programa LIKE '%".$_POST["nombre"]."%' ");
 					for($i = 0; $i < count($programa); $i++)
 					{
 
                                             
-                                          
-                                            
-       
-                                            
+           
                                                 echo '<li class="yu_tema_aclista listado_programa" role="option" data-text="'.$programa[$i]["Nombre_Programa"].'" data-type="'.$programa[$i]["ID_Programa"].'">';
 						echo '<div class="ac_journal">';
 						echo '<span class="lf">'.$programa[$i]["Nombre_Programa"].'</span>';
