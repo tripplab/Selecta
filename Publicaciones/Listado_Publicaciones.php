@@ -37,8 +37,11 @@
 				echo '</li>';
 			}
 			
-			$tipo_copei = $conexion->Consultas("SELECT ID_Tipo, Tipo, Descripcion, Puntuacion_Min, Puntuacion_Max FROM Tipo_Copei");
-			$citas = (isset($_POST["citas"])) ? $_POST["citas"] : "1";
+			$tipo_copei = $conexion->Consultas("SELECT ID_Tipo, Tipo, Descripcion, Puntuacion_Min, Puntuacion_Max FROM Tipo_Copei ");
+			
+                       
+                        
+                        $citas = (isset($_POST["citas"])) ? $_POST["citas"] : "1";
 			$impacto = (isset($_POST["factor"])) ? $_POST["factor"] : "1";
 			$_SESSION["citas"] = $citas;
 			$_SESSION["factor"] = $impacto;
@@ -118,13 +121,22 @@
 			$i++;
 			echo '</div>';
 			echo '<div class="productos_menu_2">';
+                         
 			//Productos 2
 			$cad = "";
 			$x = 0;
 			$tipo = array("2.1.a","2.1.b","2.1.c","2.1.d","2.1.e","2.1.f","2.1.g","2.2","2.3","2.4","2.5","2.6","2.7.a","2.7.b","2.7.c","2.7.d","2.7.e","2.7.f","2.8.a","2.8.b","2.8.c","2.8.d","2.8.e","2.8.f","2.9","2.10.a","2.10.b","2.10.c","2.11.a","2.11.b","2.11.c","2.12.a","2.12.b","2.12.c","2.12.d");
-			for(;$tipo_copei[$i]["Tipo"] != "3"; $i++)
+			
+                       
+                        
+             
+                        for(;$tipo_copei[$i]["Tipo"] != "3"; $i++)
 			{
-				$cad .= $tipo_copei[$i]["Tipo"]." ".$tipo_copei[$i]["Descripcion"]."<br><br>";
+                               
+                           
+                            $cad .= $tipo_copei[$i]["Tipo"]." ".$tipo_copei[$i]["Descripcion"]."<br><br>";
+                           
+                                
 				if($tipo_copei[$i]["Tipo"] == $tipo[$x]  && $tipo[$x] != "2.6")
 				{
 					$arreglo_tipo = explode(".", $tipo[$x]);
@@ -176,7 +188,7 @@
 						{
                                                     if($producto[$y]["FK_Journal"]==NULL){
                                                         
-                                                         $lista_Estado = $conexion->Consultas("SELECT Estado FROM Articulos WHERE ID_Articulo = " .$producto[$y]["ID_Articulo"]);
+                                                         $lista_Estado = $conexion->Consultas("SELECT Estado FROM articulos WHERE ID_Articulo = " .$producto[$y]["ID_Articulo"]);
 							$detalles=" Estado: Preparación";
                                                         
                                                     }
@@ -191,12 +203,24 @@
 							if($producto[$y]["Paginas"] != "")
 								$detalles .= $producto[$y]["Paginas"];
 							$fecha = explode("-", $producto[$y]["Fecha"]);
-						//	$detalles .= "(".$fecha[$y].")";
+							$detalles .= "(".$fecha[$y].")";
 							$detalles .=", IF ".$detalles1[0]["Factor_Impacto"];
+                                                    
+                                                        
+                                                    }
+                                                   $puntuacionmax= $tipo_copei[$i]["Puntuacion_Max"];
+                                                    if($producto[$y]["FK_Tesis"]==NULL){
+                                                       $puntuacionmax1=$tipo_copei[$i]["Puntuacion_Max"];
+                                                    }
+                                                    else{
+                                                         $puntuacionmax1= $puntuacionmax*2.5;
+                                                         
                                                     }
 						}
-						crear_elementos($producto[$y]["ID_Articulo"], $tipo_copei[$i]["Tipo"], $tipo_copei[$i]["Tipo"].".".$producto[$y]["Etiqueta_Copei"], "Producto: ", $titulo, $l_autores, $detalles, $tipo_copei[$i]["Puntuacion_Min"], $tipo_copei[$i]["Puntuacion_Max"]);
-					}
+						crear_elementos($producto[$y]["ID_Articulo"], $tipo_copei[$i]["Tipo"], $tipo_copei[$i]["Tipo"].".".$producto[$y]["Etiqueta_Copei"], "Producto: ", $titulo, $l_autores, $detalles, $tipo_copei[$i]["Puntuacion_Min"], $puntuacionmax1);
+					
+                                                 $puntuacionmax1=$tipo_copei[$i]["Puntuacion_Max"];
+                                                    }
 					unset($producto);
 					$x++;
 					$cad = "";
