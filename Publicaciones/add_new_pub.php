@@ -197,7 +197,7 @@
 								</div>
 							</div>
 							<div class="control_grupo a_5" id="unidad_div"><!--control-grupo-->
-								<label class="label_control">Unidad</label>
+								<label class="label_control">Unidad </label>
 								<input type="hidden" id="id_unidad" name="id_unidad">
 								<div class="controles"><!--controls-->
 									<input type="textbox" id="unidad" placeholder="Teclea el nombre de la Unidad y elige la opcion correcta de la lista" style="width: 620px;" maxlength="255" class="texto" name="unidad">
@@ -215,8 +215,7 @@
 								<div class="controles"><!--controls-->
 									
                                                                     <input type="textbox" id="programa" placeholder="Teclea el nombre del Programa y elige la opcion correcta de la lista" style="width: 620px;" maxlength="255" class="texto" name="programa">
-									
-                                                                        
+
                                                                         <div id="cargar_lista_programa" class="yu_widget yu_listaac yu_posicionado_widget yu_aclista_escondida" aria-hidden="true" style="width: 621px; left: 160px;"><!--yui3-gidget yui3-aclist yui3-widget-positionated yui3-aclist-hidden-->
 										<div class="yu_aclista_contenedor"><!--yui3-aclist-container-->
 											<ul class="yu_lista_aclista" role="listbox" id="contenedor_programa"><!--yui3-aclist-list-->
