@@ -188,7 +188,7 @@
 						{
                                                     if($producto[$y]["FK_Journal"]==NULL){
                                                         
-                                                         $lista_Estado = $conexion->Consultas("SELECT Estado FROM Articulos WHERE ID_Articulo = " .$producto[$y]["ID_Articulo"]);
+                                                         $lista_Estado = $conexion->Consultas("SELECT Estado FROM articulos WHERE ID_Articulo = " .$producto[$y]["ID_Articulo"]);
 							$detalles=" Estado: Preparación";
                                                         
                                                     }
