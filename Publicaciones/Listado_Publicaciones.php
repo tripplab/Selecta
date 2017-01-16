@@ -29,7 +29,7 @@
 						echo '</div>';					
 					echo '</div>';	
 					echo '<div class="autores autores_expandibles">';	
-						echo '<div class="contenido_expandido autores_js contenido_expandido_js expandido_colapsado_js">';
+						echo '<div class="contenido_expandido autores_js contenido_expandido_js expandido_colapsado_js" style="max-height: none;>';
 							echo '<span class="autores">'.$autores.'</span>';
 						echo '</div>';
 					echo '</div>';		
