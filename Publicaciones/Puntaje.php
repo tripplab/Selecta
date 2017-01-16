@@ -37,8 +37,22 @@
 		else if(count($tipo) > 1 && $tipo[0] == "2" && $tipo[1] != "6")
 		{
 			$producto = $conexion->Consultas("SELECT COUNT(ID_Articulo) AS Total FROM Articulos, Alias WHERE ID_Articulo = FK_Articulo AND FK_Usuario = ".$_SESSION['Usuario_Temporal']." AND Estado not in ('Preparacion', 'Enviado',' ') AND FK_Tipo = ".$tipo_copei[$x]["ID_Tipo"]);
-			$puntaje_publicaciones_min += ($tipo_copei[$x]["Puntuacion_Min"] * $producto[0]["Total"]);
-			$puntaje_publicaciones_max += ($tipo_copei[$x]["Puntuacion_Max"] * $producto[0]["Total"]);
+			
+                        $Total_tesis= $conexion->Consultas("SELECT COUNT(ID_Articulo) AS TotalTesis FROM Articulos,Alias where Articulos.FK_Tipo=".$tipo_copei[$x]["ID_Tipo"]." and ID_Articulo = FK_Articulo and Alias.FK_Usuario= ".$_SESSION['Usuario_Temporal']." and Estado not in ('Preparacion', 'Enviado',' ') AND Articulos.FK_Tesis IS NOT NULL");
+		        $total_tesis_Amentadas=$Total_tesis[0]["TotalTesis"];
+                        
+                        $total_productos=$producto[0]["Total"];
+                                      
+                         $total_Articulos=$total_productos-$total_tesis_Amentadas;
+                                        
+                                        
+                        $puntaje_publicaciones_min += ($tipo_copei[$x]["Puntuacion_Min"] * $total_Articulos);
+			$puntaje_publicaciones_max += ($tipo_copei[$x]["Puntuacion_Max"] * $total_Articulos);
+                        
+                         $puntaje_publicaciones_min += ($tipo_copei[$x]["Puntuacion_Min"] * $total_tesis_Amentadas)*(2.5);
+			$puntaje_publicaciones_max += ($tipo_copei[$x]["Puntuacion_Max"] * $total_tesis_Amentadas) *(2.5);
+                        
+                       
 		}
 		else if(count($tipo) > 1 && $tipo[0] == "2" && $tipo[1] == "6")
 		{
@@ -47,9 +61,15 @@
 			{
 				$copei = $conexion->Consultas("SELECT ID_Tipo, Puntuacion_Min, Puntuacion_Max FROM Tipo_Copei WHERE Tipo LIKE '".$tipo[$y]."'");
 				$producto = $conexion->Consultas("SELECT COUNT(ID_Articulo) AS Total FROM Articulos, Alias WHERE ID_Articulo = FK_Articulo AND FK_Usuario = ".$_SESSION['Usuario_Temporal']." AND FK_Tipo = ".$tipo_copei[$x]["ID_Tipo"]."  AND Estado not in ('Preparacion', 'Enviado',' ') AND FK_Tesis IS NOT NULL");
-				$puntaje_publicaciones_min += ($copei[0]["Puntuacion_Min"] * $producto[0]["Total"]);
+				
+                               
+                                        
+                                $puntaje_publicaciones_min += ($copei[0]["Puntuacion_Min"] *$producto[0]["Total"]);
 				$puntaje_publicaciones_max += ($copei[0]["Puntuacion_Max"] * $producto[0]["Total"]);
-			}			
+                                
+                                
+			}		
+                        
 		}
 		else if(count($tipo) > 1 && $tipo[0] == "3" && $tipo[1] == "1")
 		{
