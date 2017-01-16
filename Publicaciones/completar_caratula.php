@@ -120,7 +120,7 @@
 										</td>
 									</tr>
 								</tbody>
-							</table>
+						</table>
 							<div class="limpiar"></div><!--clear-->
 						</div>
 						<div class="cabecera_contenedora rf"><!--header-content lf-->
