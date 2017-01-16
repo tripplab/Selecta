@@ -160,7 +160,7 @@
 									{	
                                                                              if($producto["FK_Journal"]==NULL){
                                                                      $lista_Estado = $conexion->Consultas("SELECT Estado FROM articulos WHERE ID_Articulo = ".$producto["ID_Articulo"]);            
-							$detalles=" Estado:".$lista_Estado;
+							$detalles=" Estado:".$lista_Estado[0]["Estado"];
                                                     }
                                                     else{
 										$detalles1 = $conexion->Consultas("SELECT Nombre_Completo, Factor_Impacto FROM Journal WHERE ID_Journal = ".$producto["FK_Journal"]);
