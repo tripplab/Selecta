@@ -12,7 +12,13 @@
 			function crear_elementos($identificador, $tipo_copei, $actividad, $tipo, $titulo, $autores, $detalles, $minimo, $maximo)
 			{
 				$espacio = ($minimo != "" && $maximo != "") ? " - " : " ";
-				echo '<div class="rf">'.$minimo.$espacio.$maximo.'</div>';
+				 if($detalles==" Estado: Preparación"){
+                                    echo '<div class="rf"></div>';
+                                }
+                                else{
+                                   echo '<div class="rf">'.$minimo.$espacio.$maximo.'</div>'; 
+                                }
+				
 				echo '<div class="informacion_actividad">'.$actividad.'</div>';
 				echo '<li class="lista_temas_c publicacion_li contenido_js">';
 					echo '<div class="titulo_expandible" style="margin-top: -2px;">';
