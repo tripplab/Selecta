@@ -159,7 +159,7 @@
 									if($subtipo[1] == '1' && ($subtipo[2] == "a"))
 									{	
                                                                              if(is_null($producto["FK_Journal"])){
-                                                                     $lista_Estado = $conexion->Consultas("SELECT Estado FROM articulos WHERE ID_Articulo = ".$producto["ID_Articulo"]);            
+                                                                     $lista_Estado = $conexion->Consultas("SELECT Estado FROM Articulos WHERE ID_Articulo = ".$producto["ID_Articulo"]);            
 							$detalles=" Estado:".$lista_Estado[0]["Estado"];
                                                     }
                                                     else{
