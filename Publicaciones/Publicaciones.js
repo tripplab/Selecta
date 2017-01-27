@@ -66,8 +66,10 @@ $.fn.most_ocul_form_prod = function(tipo, titulo)
 	}
 	/*else if((partes[0] == "2" && (partes[1] == "1" || partes[1] == "2" || partes[1] == "3")) || tipo == "4.5" || tipo == "4.7" || tipo == "4.12")
 		$(".a_1").show();*/
-	else if(tipo == "2.4" || tipo == "2.5")
+	else if(tipo == "2.4" || tipo == "2.5"){
 		$(".a_24").show();
+            	
+            }
 	else if(partes[0] == "2" && (partes[1] == "7" || partes[1] == "8" || partes[1] == "9" || partes[1] == "11" || partes[1] == "12"))
 		$(".a_3").show();
 	else if(partes[0] == "3" && partes[1] == "1" )
@@ -158,6 +160,7 @@ $.fn.most_ocul_form_prod = function(tipo, titulo)
 	{
 		$(".a_17").show();	
 		$("#tema_l").text("Impacto");
+               
 	}
 	else if(partes[0] == "2" &&  partes[1] == "10")
 	{
@@ -474,18 +477,20 @@ $(document).ready(function()
 				$(".mensaje").hide();
 				
 				$(".yu_widget_bd").most_ocul_form_prod(tipo, "");
-				if(partes[0] == "0" || partes[0] == "1" || partes[0] == "2" && (partes[1] == "5" || partes[1] == "10") || tipo == "2.12.a" || tipo == "2.12.b" || partes[0] == "3" && partes[1] == "1" || tipo == "4.3" || tipo == "4.4" || tipo == "4.5" || tipo == "4.6" || tipo == "4.7" || tipo == "4.8" || tipo == "4.9" || tipo == "4.10" || tipo == "4.11" || tipo == "4.13" || tipo == "4.14" || tipo == "4.15" || tipo == "4.16" || tipo == "4.17" || tipo == "4.18" || tipo == "5")
+				if(partes[0] == "0" || partes[0] == "1" || partes[0] == "2" && ( partes[1] == "10") || tipo == "2.12.a" || tipo == "2.12.b" || partes[0] == "3" && partes[1] == "1" || tipo == "4.3" || tipo == "4.4" || tipo == "4.5" || tipo == "4.6" || tipo == "4.7" || tipo == "4.8" || tipo == "4.9" || tipo == "4.10" || tipo == "4.11" || tipo == "4.13" || tipo == "4.14" || tipo == "4.15" || tipo == "4.16" || tipo == "4.17" || tipo == "4.18" || tipo == "5")
 				{
+                                   
 					$("#tipo_copei").val("");
 					$("#titulo").removeClass("quitar_margen");
 					$("#titulo").addClass("quitar_margen");
 					$("#titulo").attr("disabled", false);
 				}
-				else if((partes[0] == "2" && (partes[1] == "1" || partes[1] == "2" || partes[1] == "3" || partes[1] == "4" || partes[1] == "5" || partes[1] == "6" || partes[1] == "7" || partes[1] == "8" || partes[1] == "9" || partes[1] == "10" || partes[1] == "11" || partes[1] == "12" )|| partes[0] == "3" && (partes[1] == "2" || partes[1] == "3") || tipo == "4.12" || tipo == "2.9"))
+				else if((partes[0] == "2" && (partes[1] == "1" || partes[1] == "2" || partes[1] == "3" || partes[1] == "4" || partes[1] == "5" || partes[1] == "6" || partes[1] == "7" || partes[1] == "8" || partes[1] == "9" || partes[1] == "10" || partes[1] == "11" || partes[1] == "12" )|| partes[0] == "3" && (partes[1] == "2" || partes[1] == "3") || tipo == "4.12" || tipo == "2.9" || tipo == "2.5"))
 						$(".a_titulo").show();
 				
 				$.post("../Scripts/consulta.php", {opcion: "copei", tipo: tipo, id: id}, function(data){
-					$("#tipo_copei").val(tipo);
+					
+                                    $("#tipo_copei").val(tipo);
 					$("#tipo_copei_esc").val(tipo);
 					$("#guar_act_copei").val(id);
 					$("#localidad").val(data.Localidad);
@@ -598,4 +603,4 @@ $(document).ready(function()
 				alert(data);
 		});
 	});
-}); 
+});
