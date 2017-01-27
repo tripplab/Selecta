@@ -1,6 +1,6 @@
 <html>
 	<?php
-       
+        error_reporting(E_ALL ^ E_NOTICE);
 		session_start();
 		$tipo_get = $_POST["t"];
 		$id_get = $_POST["i"];
@@ -129,7 +129,7 @@
 									if($subtipo[1] == '1' || $subtipo[1] == "2" || $subtipo[1] == "3" || $subtipo[1] == "4" || $subtipo[1] == "7" || $subtipo[1] == "8" || $subtipo[1] == "9" || $subtipo[1] == "11" || $tipo_get == "2.12.c" || $tipo_get == "2.12.d")
 										$titulo = $producto["Titulo"];		
 									else if($subtipo[1] == "5" || $tipo_get == "2.12.a" || $tipo_get == "2.12.b")
-										$titulo = $producto["Tema"];	
+										$titulo = $producto["Titulo"];	
 									else if($subtipo[1] == "10")
 										$titulo = $producto["Abstract"];
 									$lista_autores = $conexion->Consultas("SELECT Alias FROM Alias WHERE FK_Articulo = ".$producto["ID_Articulo"]);
@@ -159,7 +159,7 @@
 									if($subtipo[1] == '1' && ($subtipo[2] == "a"))
 									{	
                                                                              if(is_null($producto["FK_Journal"])){
-                                                                     $lista_Estado = $conexion->Consultas("SELECT Estado FROM Articulos WHERE ID_Articulo = ".$producto["ID_Articulo"]);            
+                                                                     $lista_Estado = $conexion->Consultas("SELECT Estado FROM articulos WHERE ID_Articulo = ".$producto["ID_Articulo"]);            
 							$detalles=" Estado:".$lista_Estado[0]["Estado"];
                                                     }
                                                     else{
