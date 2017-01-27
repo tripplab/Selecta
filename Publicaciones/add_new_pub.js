@@ -177,7 +177,10 @@ $.fn.most_ocul_form_prod = function(tipo, titulo)
 	else if((partes[0] == "2" && (partes[1] == "1" || partes[1] == "2" || partes[1] == "3")) || tipo == "4.5" || tipo == "4.7" || tipo == "4.12")
 		$(".a_1").show();
 	else if(tipo == "2.4" || tipo == "2.5")
+        {
 		$(".a_24").show();
+                $(".a_titulo").show();
+            }
 	else if(partes[0] == "2" && (partes[1] == "7" || partes[1] == "8" || partes[1] == "9" || partes[1] == "11" || partes[1] == "12"))
 		$(".a_3").show();
 	else if(partes[0] == "3" && partes[1] == "1" )
@@ -251,6 +254,7 @@ $.fn.most_ocul_form_prod = function(tipo, titulo)
 	}
 	else if(tipo == "2.3" || tipo == "2.4" || tipo == "2.5")
 		$(".a_2").show();
+            
 	else if(partes[0] == "2" && partes[1] == "7")
 	{
 		$("#editorial_l").text("Afiliación");
@@ -947,5 +951,3 @@ $(document).ready(function()
 		return false;
 	});
 });
- 
- 
