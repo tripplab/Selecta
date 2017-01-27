@@ -481,7 +481,7 @@ $(document).ready(function()
 					$("#titulo").addClass("quitar_margen");
 					$("#titulo").attr("disabled", false);
 				}
-				else if((partes[0] == "2" && partes[1] == "1" || partes[0] == "3" && (partes[1] == "2" || partes[1] == "3") || tipo == "4.12"))
+				else if((partes[0] == "2" && (partes[1] == "1" || partes[1] == "2" || partes[1] == "3" || partes[1] == "4" || partes[1] == "5" || partes[1] == "6" || partes[1] == "7" || partes[1] == "8" || partes[1] == "9" || partes[1] == "10" || partes[1] == "11" || partes[1] == "12" )|| partes[0] == "3" && (partes[1] == "2" || partes[1] == "3") || tipo == "4.12" || tipo == "2.9"))
 						$(".a_titulo").show();
 				
 				$.post("../Scripts/consulta.php", {opcion: "copei", tipo: tipo, id: id}, function(data){
