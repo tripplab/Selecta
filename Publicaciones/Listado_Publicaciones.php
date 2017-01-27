@@ -154,7 +154,7 @@
 						if($arreglo_tipo[1] == '1' || $arreglo_tipo[1] == "2" || $arreglo_tipo[1] == "3" || $arreglo_tipo[1] == "4" || $arreglo_tipo[1] == "7" || $arreglo_tipo[1] == "8" || $arreglo_tipo[1] == "9" || $arreglo_tipo[1] == "11" || $tipo[$x] == "2.12.c" || $tipo[$x] == "2.12.d")
 							$titulo = $producto[$y]["Titulo"];		
 						else if($arreglo_tipo[1] == "5" || $tipo[$x] == "2.12.a" || $tipo[$x] == "2.12.b")
-							$titulo = $producto[$y]["Tema"];	
+							$titulo = $producto[$y]["Titulo"];	
 						else if($arreglo_tipo[1] == "10")
 							$titulo = $producto[$y]["Abstract"];
 						$autores = $conexion->Consultas("SELECT Alias, FK_Usuario FROM Alias WHERE FK_Articulo = ".$producto[$y]["ID_Articulo"]);
@@ -194,9 +194,9 @@
 						{
                                                     if($producto[$y]["FK_Journal"]==NULL){
                                                         
+                                                             
                                                          $lista_Estado = $conexion->Consultas("SELECT Estado FROM Articulos WHERE ID_Articulo = " .$producto[$y]["ID_Articulo"]);
 							$detalles=" Estado:".$lista_Estado[0]["Estado"];
-							    
                                                         
                                                     }
                                                     else{
