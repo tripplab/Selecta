@@ -12,8 +12,8 @@
 			function crear_elementos($identificador, $tipo_copei, $actividad, $tipo, $titulo, $autores, $detalles, $minimo, $maximo)
 			{
 				$espacio = ($minimo != "" && $maximo != "") ? " - " : " ";
-				 if($detalles==" Estado: Preparación"){
-                                    echo '<div class="rf"></div>';
+				 if($detalles==" Estado:Preparacion" || $detalles==" Estado:Enviado"){
+                                    echo '<div class="rf">0</div>';
                                 }
                                 else{
                                    echo '<div class="rf">'.$minimo.$espacio.$maximo.'</div>'; 
