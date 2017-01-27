@@ -12,7 +12,7 @@
 			function crear_elementos($identificador, $tipo_copei, $actividad, $tipo, $titulo, $autores, $detalles, $minimo, $maximo)
 			{
 				$espacio = ($minimo != "" && $maximo != "") ? " - " : " ";
-				 if($detalles==" Estado:Preparacion" || $detalles==" Estado:Enviado"){
+				 if($detalles==" Estado:Preparacion" || $detalles==" Estado:Enviado" || $detalles=="En proceso"){
                                     echo '<div class="rf">0</div>';
                                 }
                                 else{
@@ -240,7 +240,7 @@
 					{
 						$arreglo_tipo = explode(".", $producto[$y]["Tipo"]);
 						$titulo = "";
-						if($arreglo_tipo[1] == '1' || $arreglo_tipo[1] == "2" || $arreglo_tipo[1] == "3" || $arreglo_tipo[1] == "4")
+						if($arreglo_tipo[1] == '1' || $arreglo_tipo[1] == "2" || $arreglo_tipo[1] == "3" || $arreglo_tipo[1] == "4" || $arreglo_tipo[1] == "9")
 							$titulo = $producto[$y]["Titulo"];		
 						else if($arreglo_tipo[1] == "5")
 							$titulo = $producto[$y]["Tema"];		
