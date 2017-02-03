@@ -41,13 +41,32 @@
 					$pag = ($_POST['tipo_copei_esc'] == '2.4' || $_POST['tipo_copei_esc'] == '2.5') ? $_POST['paginas']: $_POST['pag'];
 					if($_POST['guar_act'] == null)
 					{
-						$conexion->Guardar("INSERT INTO Articulos (Titulo, Conferencia_Capitulo, Impacto_TituloLibro, Tema, Abstract, No_Referencia_Rerporte, Volumen, Numero, Paginas, Estado,Editor, Editorial_Afiliacion, Edicion, ISBN, DOI, Numero_Citas, Localidad_PagWeb, Fecha, FK_Tipo, FK_Tesis, FK_Journal) values ('".$_POST['titulo']."', '".$_POST['capitulo']."', '".$_POST['titulo_libro']."', '".$_POST['topic']."', '".$_POST['abstract']."', '".$_POST['referencia']."', '".$_POST['vol']."', '".$_POST['num']."', '".$pag."','".$_POST['stado']."' ,'".$_POST['editor']."', '".$_POST['editorial']."', '".$_POST['edicion']."', '".$_POST['isbn']."', '".$_POST['doi']."', '".$_POST['citas']."', '".$_POST['localidad']."', '".$_POST['anio_pub']."-".$_POST['mes_pub']."-".$_POST['dia_pub']."', ".$tipo_copei.", ".$tesis.", ".$journal.")");
+                                             if($tesis!='null'){
+                                         $ordentesis = $conexion->Consultas("select Max(orden)as maximo from Articulos");
+                                          $orden=$ordentesis[0]["maximo"];
+                                          $orden=$orden+1;
+                                            }
+                                            else{
+                                              $orden=0;  
+                                            }
+						$conexion->Guardar("INSERT INTO Articulos (Titulo, Conferencia_Capitulo, Impacto_TituloLibro, Tema, Abstract, No_Referencia_Rerporte, Volumen, Numero, Paginas, Estado,Editor, Editorial_Afiliacion, Edicion, ISBN, DOI, Numero_Citas, Localidad_PagWeb, Fecha, FK_Tipo, FK_Tesis, FK_Journal,orden) values ('".$_POST['titulo']."', '".$_POST['capitulo']."', '".$_POST['titulo_libro']."', '".$_POST['topic']."', '".$_POST['abstract']."', '".$_POST['referencia']."', '".$_POST['vol']."', '".$_POST['num']."', '".$pag."','".$_POST['stado']."' ,'".$_POST['editor']."', '".$_POST['editorial']."', '".$_POST['edicion']."', '".$_POST['isbn']."', '".$_POST['doi']."', '".$_POST['citas']."', '".$_POST['localidad']."', '".$_POST['anio_pub']."-".$_POST['mes_pub']."-".$_POST['dia_pub']."', ".$tipo_copei.", ".$tesis.", ".$journal.",".$orden.")");
 						$autores = explode(",", $_POST['autores']);
 						$conexion->Autores_Articulos_Tesis($conexion->identificador, $autores, "INSERT INTO Alias(Alias, Etiqueta_Copei, FK_Usuario, FK_Articulo) VALUES", "SELECT MAX(Etiqueta_Copei) as Max FROM Alias, Articulos WHERE FK_Articulo = ID_Articulo AND FK_Tipo = ".$tipo_copei." AND FK_Usuario = ".$_SESSION["Usuario_Temporal"]);
 					}
 					else
 					{
-						$conexion->Guardar("UPDATE Articulos SET Titulo = '".$_POST['titulo']."', Conferencia_Capitulo = '".$_POST['capitulo']."', Impacto_TituloLibro = '".$_POST['titulo_libro']."', Tema = '".$_POST['topic']."', Abstract = '".$_POST['abstract']."', No_Referencia_Rerporte = '".$_POST['referencia']."', Volumen = '".$_POST['vol']."', Numero = '".$_POST['num']."', Paginas = '".$pag."', Estado='".$_POST['stado']."',Editor = '".$_POST['editor']."', Editorial_Afiliacion = '".$_POST['editorial']."', Edicion = '".$_POST['edicion']."', ISBN = '".$_POST['isbn']."', DOI = '".$_POST['doi']."', Numero_Citas = '".$_POST['citas']."', Localidad_PagWeb = '".$_POST['localidad']."', Fecha = '".$_POST['anio_pub']."-".$_POST['mes_pub']."-".$_POST['dia_pub']."',  FK_Tesis = ".$tesis.", FK_Journal = ".$journal." WHERE ID_Articulo = ".$_POST['guar_act']);
+                                            
+                                           
+                                            if($tesis!='null'){
+                                         $ordentesis = $conexion->Consultas("select Max(orden) as maximo from Articulos");
+                                           $orden=$ordentesis[0]["maximo"];
+                                              $orden=$orden+1;
+                                            }
+                                            else{
+                                                $orden=0;
+                                            }
+                                            
+						$conexion->Guardar("UPDATE Articulos SET Titulo = '".$_POST['titulo']."', Conferencia_Capitulo = '".$_POST['capitulo']."', Impacto_TituloLibro = '".$_POST['titulo_libro']."', Tema = '".$_POST['topic']."', Abstract = '".$_POST['abstract']."', No_Referencia_Rerporte = '".$_POST['referencia']."', Volumen = '".$_POST['vol']."', Numero = '".$_POST['num']."', Paginas = '".$pag."', Estado='".$_POST['stado']."',Editor = '".$_POST['editor']."', Editorial_Afiliacion = '".$_POST['editorial']."', Edicion = '".$_POST['edicion']."', ISBN = '".$_POST['isbn']."', DOI = '".$_POST['doi']."', Numero_Citas = '".$_POST['citas']."', Localidad_PagWeb = '".$_POST['localidad']."', Fecha = '".$_POST['anio_pub']."-".$_POST['mes_pub']."-".$_POST['dia_pub']."',  FK_Tesis = ".$tesis.", FK_Journal = ".$journal.",orden=".$orden." WHERE ID_Articulo = ".$_POST['guar_act']);
 						$autores_caja = explode(", ", $_POST['autores']);
 						$autores_bd = $conexion->Consultas("SELECT Alias, ID_Alias FROM Alias WHERE FK_Articulo = ".$_POST['guar_act']);
 						$conexion->Editar_Autores_Articulos_Tesis($autores_bd, $autores_caja, "Alias", "ID_Alias", $_POST['guar_act'], "INSERT INTO Alias(Alias, Etiqueta_Copei, FK_Usuario, FK_Articulo) VALUES", "SELECT MAX(Etiqueta_Copei) as Max FROM Alias, Articulos WHERE FK_Articulo = ID_Articulo AND FK_Tipo = ".$tipo_copei." AND FK_Usuario = ".$_SESSION["Usuario_Temporal"]);
@@ -183,7 +202,7 @@
 			switch($_POST["tipo"])
 			{
 				case "2.1.a": case "2.1.b": case "2.1.c": case "2.1.d": case "2.1.e": case "2.1.f": case "2.1.g": case "2.2": case "2.3":
-				case "2.4": case "2.5": case "2.7.a": case "2.7.b": case "2.7.c": case "2.7.d":  case "2.7.e": case "2.7.f": case "2.8.a": case "2.8.b": case "2.8.c":
+				case "2.4": case "2.5": case "2.7.a": case "2.7.b": case "2.7.c": case "2.7.d": case "2.8.a": case "2.8.b": case "2.8.c":
 				case "2.8.d": case "2.8.e": case "2.8.f": case "2.9": case "2.10.a": case "2.10.b": case "2.10.c": case "2.11.a": 
 				case "2.11.b": case "2.11.c": case "2.12.a": case "2.12.b": case "2.12.c": case "2.12.d": case "5":
 					$carpeta = "../Archivos/Articulos/";
@@ -214,7 +233,7 @@
 			switch($_POST["tipo"])
 			{
 				case "2.1.a": case "2.1.b": case "2.1.c": case "2.1.d": case "2.1.e": case "2.1.f": case "2.1.g": case "2.2": case "2.3":
-				case "2.4": case "2.5": case "2.7.a": case "2.7.b": case "2.7.c": case "2.7.d":  case "2.7.e": case "2.7.f":case "2.8.a": case "2.8.b": case "2.8.c":
+				case "2.4": case "2.5": case "2.7.a": case "2.7.b": case "2.7.c": case "2.7.d": case "2.8.a": case "2.8.b": case "2.8.c":
 				case "2.8.d": case "2.8.e": case "2.8.f": case "2.9": case "2.10.a": case "2.10.b": case "2.10.c": case "2.11.a": 
 				case "2.11.b": case "2.11.c": case "2.12.a": case "2.12.b": case "2.12.c": case "2.12.d":
 					$conexion->Guardar("CALL Etiqueta_Articulos_Editar_SP(".$_POST["identificador"].", ".$_SESSION["Usuario_Temporal"].", ".$_POST["etiqueta"].")");
@@ -243,7 +262,7 @@
 					$conexion->Eliminar("DELETE FROM Categoria WHERE ID_Promocion = ".$_POST["id"]);
 				break;
 				case "2.1.a": case "2.1.b": case "2.1.c": case "2.1.d": case "2.1.e": case "2.1.f": case "2.1.g": case "2.2": case "2.3":
-				case "2.4": case "2.5": case "2.7.a": case "2.7.b": case "2.7.c": case "2.7.d":  case "2.7.e": case "2.7.f": case "2.8.a": case "2.8.b": case "2.8.c":
+				case "2.4": case "2.5": case "2.7.a": case "2.7.b": case "2.7.c": case "2.7.d": case "2.8.a": case "2.8.b": case "2.8.c":
 				case "2.8.d": case "2.8.e": case "2.8.f": case "2.9": case "2.10.a": case "2.10.b": case "2.10.c": case "2.11.a": 
 				case "2.11.b": case "2.11.c": case "2.12.a": case "2.12.b": case "2.12.c": case "2.12.d":
 					$conexion->Guardar("CALL Etiqueta_Articulos_Eliminar_SP(".$_POST["id"].", ".$_SESSION["Usuario_Temporal"].")");
