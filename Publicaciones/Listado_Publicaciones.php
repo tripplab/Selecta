@@ -235,7 +235,7 @@
 				else if($tipo[$x] == "2.6")
 				{
 					echo '<h2 style="margin-top: 0;">'.$cad."</h2>";
-					$producto = $conexion->Consultas("SELECT ID_Articulo, Titulo, Tema, Conferencia_Capitulo, Impacto_TituloLibro, Editor, Etiqueta_Copei, FK_Journal, Tipo, Puntuacion_Min, Puntuacion_Max FROM Articulos, Alias, Tipo_Copei WHERE ID_Tipo = FK_Tipo AND ID_Articulo = FK_Articulo AND FK_Usuario = ".$_SESSION['Usuario_Temporal']." AND FK_Tesis IS NOT NULL order by Tipo");
+					$producto = $conexion->Consultas("SELECT ID_Articulo, Titulo, Tema, Conferencia_Capitulo, Impacto_TituloLibro, Editor, Etiqueta_Copei, FK_Journal, Tipo, Puntuacion_Min, Puntuacion_Max,orden FROM Articulos, Alias, Tipo_Copei WHERE ID_Tipo = FK_Tipo AND ID_Articulo = FK_Articulo AND FK_Usuario = ".$_SESSION['Usuario_Temporal']." AND FK_Tesis IS NOT NULL order by orden");
 					for($y = 0; $y < count($producto); $y++)
 					{
 						$arreglo_tipo = explode(".", $producto[$y]["Tipo"]);
