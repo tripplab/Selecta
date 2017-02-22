@@ -146,13 +146,13 @@
 								
                                                                 
 							</div>
-                                                    <div class="control_grupo a_titulo" id="titule"><!--control-grupo-->
+                                                    <div class="control_grupo a_titulo" id="titule" ><!--control-grupo-->
 									<label class="label_control" id="titulo_l">Titulo *</label>
 									<div class="controles"><!--controls-->
                                                                             <input type="text" name="titulo" id="titulo" class="texto" >
 									</div>
 								</div>
-                                                  <div  id='Estado_div' name='Estado_div' class="control_grupo autores a_autores1"><!--control-grupo-->
+                                                  <div  id="Estado_div" name="Estado_div" class="control_grupo autores a_autores1"><!--control-grupo-->
 								
 								<strong >Estado * </strong>
                                                                 <div class="controles"><!--controls-->
@@ -173,7 +173,14 @@
 									<input type="hidden" id="tipo_copei" name="tipo_copei">
 								</div>
 							</div>
-							<div class="control_grupo a_2 a_3 a_10"><!--control-grupo-->
+                                                    <div class="control_grupo autores2 a_autores2 " id="autores2" style="display: none"><!--control-grupo-->
+								<label class="label_control" >Director 2</label>
+								<div class="controles"><!--controls-->
+									<input type="textbox" id="autores_2"  style="width: 620px;" class="texto" name="autores_2" >
+									<input type="hidden" id="tipo_copei" name="tipo_copei">
+								</div>
+							</div>
+							<div class="control_grupo a_2 a_3 a_10" id="divdoi"><!--control-grupo-->
 								<label class="label_control">DOI</label>
 								<div class="controles borde_doi"><!--controls-->
 									<input type="textbox" id="doi" style="width: 599px; border: none;" class="texto publicacion_DOI" name="doi"><!--journal-ac text error-highlight-article[journal] error-article[journal] ac-ajax-loadindoff yui3-aclist-->
@@ -457,7 +464,7 @@
 							<div class="control_grupo a_11 a_25"><!--control-grupo-->
 								<label class="label_control" id="tema_l">Titulo_Libro_Impacto_Revista</label>
 								<div class="controles"><!--controls-->
-									<input type="textbox" id="titulo_libro" style="width: 620px;" maxlength="255" class="texto" name="titulo_libro"><!--journal-ac text error-highlight-article[journal] error-article[journal] ac-ajax-loadindoff yui3-aclist-->
+									<textarea type="textbox" id="titulo_libro" style="width: 620px; height: 82px;" class="texto" name="titulo_libro"></textarea><!--journal-ac text error-highlight-article[journal] error-article[journal] ac-ajax-loadindoff yui3-aclist-->
 								</div>
 							</div>
 							<div class="control_grupo a_2 a_3 a_6 a_10 a_14 a_23 a_27 a_29" id="abs_div"><!--control-grupo-->
@@ -592,4 +599,3 @@
 		<div class="mensaje" style="padding: 50px 100px;"><!--or-text--></div>
 	</body>
 </html>
- 
