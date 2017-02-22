@@ -51,9 +51,10 @@
 			$impacto = (isset($_POST["factor"])) ? $_POST["factor"] : "1";
 			$_SESSION["citas"] = $citas;
 			$_SESSION["factor"] = $impacto;
-			//Escolaridad
-			echo '<div class="datos_generales">';
-			$cad = "";
+			
+			echo '<div class="antecedentes_academicos">';
+                        
+                        	$cad = "";
 			for($i = 0; $tipo_copei[$i]["Tipo"] != "0.2"; $i++)
 			{
 				$cad .= $tipo_copei[$i]["Tipo"]." ".$tipo_copei[$i]["Descripcion"]."<br><br>";
@@ -62,7 +63,7 @@
 					echo '<h2 style="margin-top: 0;">'.$cad."</h2>";
 					$producto = $conexion->Consultas("SELECT ID_Escolaridad, Grado, Nombre, Localidad, Anio FROM Escolaridad WHERE FK_Usuario = ".$_SESSION['Usuario_Temporal']." AND Grado NOT LIKE '%Doctorado%' ORDER BY Anio");
 					for($y = 0; $y < count($producto); $y++)
-						crear_elementos($producto[$y]["ID_Escolaridad"], $tipo_copei[$i]["Tipo"], "", "Especialidad: ", $producto[$y]["Grado"]." en ".$producto[$y]["Nombre"], $producto[$y]["Localidad"], $producto[$y]["Anio"], "", "");
+						crear_elementos($producto[$y]["ID_Escolaridad"], $tipo_copei[$i]["Tipo"], "", " ", $producto[$y]["Grado"]." en ".$producto[$y]["Nombre"], $producto[$y]["Localidad"], $producto[$y]["Anio"], "", "");
 				}
 			}
 			
@@ -72,7 +73,7 @@
 			for($y = 0; $y < count($producto); $y++)
 			{
 				$inicial = explode("-", $producto[$y]["Fecha_Inicial"]);
-				crear_elementos($producto[$y]["ID_Experiencia"], $tipo_copei[$i]["Tipo"], "", "Experiencia: ", $producto[$y]["Nombre_Localidad"], '', $inicial[2]."/".$inicial[1]."/".$inicial[0], "", "");
+				crear_elementos($producto[$y]["ID_Experiencia"], $tipo_copei[$i]["Tipo"], "", " ", $producto[$y]["Nombre_Localidad"], '', $inicial[2]."/".$inicial[1]."/".$inicial[0], "", "");
 			}
 			$i++;
 			
@@ -95,8 +96,41 @@
 			echo "</body>
 				</table>";
 			$i++;
-			echo '</div>';
-			echo '<div class="antecedentes_academicos">';
+                        echo "<br>";
+                        
+                        //SNI
+                        
+			echo '<h2 style="margin-top: 0;">'."0.4"." "."SNI"."</h2>";
+			$sni = $conexion->Consultas("SELECT * FROM SNI WHERE FK_Usuario = ".$_SESSION['Usuario_Temporal']." ORDER BY Fecha_Otorgacion");
+		if(count($sni) > 0)
+			{
+		?>
+				<table width="100%">
+					<tbody>
+						<tr>
+						<?php
+							$table = "<tr>";
+							for($x = 0; $x < count($sni); $x++)
+							{
+								$fecha = explode("-", $sni[$x]["Fecha_Otorgacion"]);
+								if($rol == "Administrador" || (isset($_SESSION['ID']) && $id == $_SESSION["ID"]))
+									echo "<td>  <a  value='".$sni[$x]["ID_SNI"]."'>".$fecha[0]."</a></td>";
+								else
+									echo "<td>  <a value='".$sni[$x]["ID_SNI"]."'>".$fecha[0]."</a></td>";
+								$table .= "<td>Nivel: ".$sni[$x]["Nivel"]."</td>";
+							}
+							$table .= "</tr>";
+						?>
+						</tr>
+						<?php 
+							echo $table;	
+						?>
+					</body>
+				</table>
+		<?php
+			}
+                        echo "<br>";
+                         echo "<br>";
 			//Doctorado
 			$cad = "";
 			for(; $tipo_copei[$i]["Tipo"] != "1.2"; $i++)
@@ -107,7 +141,7 @@
 					echo '<h2 style="margin-top: 0;">'.$cad."</h2>";
 					$producto = $conexion->Consultas("SELECT ID_Escolaridad, Grado, Nombre, Localidad, Anio FROM Escolaridad WHERE FK_Usuario = ".$_SESSION['Usuario_Temporal']." AND Grado LIKE '%Doctorado%' ORDER BY Anio");
 					for($y = 0; $y < count($producto); $y++)
-						crear_elementos($producto[$y]["ID_Escolaridad"], $tipo_copei[$i]["Tipo"], "", "Doctorado: ", $producto[$y]["Nombre"], $producto[$y]["Localidad"], $producto[$y]["Anio"], "", $tipo_copei[$i]["Puntuacion_Max"]);
+						crear_elementos($producto[$y]["ID_Escolaridad"], $tipo_copei[$i]["Tipo"], "", " ", $producto[$y]["Nombre"], $producto[$y]["Localidad"], $producto[$y]["Anio"], "", $tipo_copei[$i]["Puntuacion_Max"]);
 				}
 			}
 			//Estancia
@@ -122,7 +156,7 @@
 				$inicial = explode("-", $producto[$y]["Fecha_Inicial"]);
 				$final = explode("-", $producto[$y]["Fecha_Final"]);	
 				$interval = date_diff($datetime1, $datetime2);
-				crear_elementos($producto[$y]["ID_Experiencia"], $tipo_copei[$i]["Tipo"], "", "Estancia: ", $producto[$y]["Nombre_Localidad"], "", $inicial[2]."/".$inicial[1]."/".$inicial[0]." - ".$final[2]."/".$final[1]."/".$final[0], "", ($interval->format('%Y') * $tipo_copei[$i]["Puntuacion_Max"]));
+				crear_elementos($producto[$y]["ID_Experiencia"], $tipo_copei[$i]["Tipo"], "", " ", $producto[$y]["Nombre_Localidad"], "", $inicial[2]."/".$inicial[1]."/".$inicial[0]." - ".$final[2]."/".$final[1]."/".$final[0], "", ($interval->format('%Y') * $tipo_copei[$i]["Puntuacion_Max"]));
 			}
 			$i++;
 			echo '</div>';
@@ -131,7 +165,7 @@
 			//Productos 2
 			$cad = "";
 			$x = 0;
-			$tipo = array("2.1.a","2.1.b","2.1.c","2.1.d","2.1.e","2.1.f","2.1.g","2.2","2.3","2.4","2.5","2.6","2.7.a","2.7.b","2.7.c","2.7.d","2.7.e","2.7.f","2.8.a","2.8.b","2.8.c","2.8.d","2.8.e","2.8.f","2.9","2.10.a","2.10.b","2.10.c","2.11.a","2.11.b","2.11.c","2.12.a","2.12.b","2.12.c","2.12.d");
+			$tipo = array("2.1.a","2.1.b","2.1.c","2.1.d","2.1.e","2.1.f","2.2","2.3","2.4","2.5","2.6","2.7.a","2.7.b","2.7.c","2.7.d","2.7.e","2.7.f","2.8.a","2.8.b","2.8.c","2.8.d","2.8.e","2.8.f","2.9","2.10.a","2.10.b","2.10.c","2.11.a","2.11.b","2.11.c","2.12.a","2.12.b","2.12.c","2.12.d");
 			
                        
                         
@@ -224,9 +258,10 @@
                                                          
                                                     }
 						}
-						crear_elementos($producto[$y]["ID_Articulo"], $tipo_copei[$i]["Tipo"], $tipo_copei[$i]["Tipo"].".".$producto[$y]["Etiqueta_Copei"], "Producto: ", $titulo, $l_autores, $detalles, $tipo_copei[$i]["Puntuacion_Min"], $puntuacionmax1);
+                                                    $puntuacionmax1=$tipo_copei[$i]["Puntuacion_Max"];
+						crear_elementos($producto[$y]["ID_Articulo"], $tipo_copei[$i]["Tipo"], $tipo_copei[$i]["Tipo"].".".$producto[$y]["Etiqueta_Copei"], " ", $titulo, $l_autores, $detalles, $tipo_copei[$i]["Puntuacion_Min"], $puntuacionmax1);
 					
-                                                 $puntuacionmax1=$tipo_copei[$i]["Puntuacion_Max"];
+                                             
                                                     }
 					unset($producto);
 					$x++;
@@ -250,7 +285,7 @@
 							$l_autores .= $autores[$z]["Alias"].", ";
 						$l_autores = trim($l_autores, ", ");
 						unset($autores);			
-						crear_elementos("no_editar", $tipo_copei[$i]["Tipo"], $tipo_copei[$i]["Tipo"].".".($y + 1), "Producto: ", $titulo, $l_autores, 'Producto: '.$producto[$y]["Tipo"].".".$producto[$y]["Etiqueta_Copei"], $producto[$y]["Puntuacion_Min"], $producto[$y]["Puntuacion_Max"]);
+						crear_elementos("no_editar", $tipo_copei[$i]["Tipo"], $tipo_copei[$i]["Tipo"].".".($y + 1), " ", $titulo, $l_autores, 'Producto: '.$producto[$y]["Tipo"].".".$producto[$y]["Etiqueta_Copei"], $producto[$y]["Puntuacion_Min"], $producto[$y]["Puntuacion_Max"]);
 					}
 					unset($producto);
 					$x++;
@@ -334,8 +369,8 @@
 					{
 						$estudiante = $conexion->Consultas("SELECT Alias FROM Usuario_Tesis WHERE FK_Tesis = ".$producto[$y]["ID_Tesis"]." AND Estudiante = 1");
 						$estudiante = (count($estudiante) > 0) ? $estudiante[0]["Alias"] : "";
-						$director = $conexion->Consultas("SELECT COUNT(ID_Usuario_Tesis) AS Total FROM Usuario_Tesis WHERE FK_Tesis = ".$producto[$y]["ID_Tesis"]." AND Estudiante = 1");
-						crear_elementos($producto[$y]["ID_Tesis"], $tipo_copei[$i]["Tipo"], $tipo_copei[$i]["Tipo"].".".$producto[$y]["Etiqueta_Copei"], "Tesis: ", $producto[$y]["Titulo"], $estudiante, (($producto[$y]["Concluida"] == 0) ? "En proceso" : "Concluida"), "", ($tipo_copei[$i]["Puntuacion_Max"] / $director[0]["Total"]));
+						$director = $conexion->Consultas("SELECT COUNT(ID_Usuario_Tesis) AS Total FROM Usuario_Tesis WHERE FK_Tesis = ".$producto[$y]["ID_Tesis"]." AND Estudiante IS NULL");
+						crear_elementos($producto[$y]["ID_Tesis"], $tipo_copei[$i]["Tipo"], $tipo_copei[$i]["Tipo"].".".$producto[$y]["Etiqueta_Copei"], " ", $producto[$y]["Titulo"], $estudiante, (($producto[$y]["Concluida"] == 0) ? "En proceso" : "Concluida"), "", ($tipo_copei[$i]["Puntuacion_Max"] / $director[0]["Total"]));
 					}
 					unset($producto);
 					$x++;
