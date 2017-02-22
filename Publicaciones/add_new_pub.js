@@ -187,7 +187,9 @@ $.fn.most_ocul_form_prod = function(tipo, titulo)
 		$(".a_5").show();
 	else if(partes[0] == "3" && (partes[1] == "3" || partes[1] == "2"))
 	{
-		$("#autor_l").text("Director(es) *");
+		$("#autor_l").text("Director 1 *");
+                $("#autores2").show();
+                
 		$(".a_6").show();	
 		$("#nivel").hide();
 		$("#datos_l").text("Concluido");
@@ -281,6 +283,9 @@ $.fn.most_ocul_form_prod = function(tipo, titulo)
 	}
 	else if(tipo == "2.9")
 	{
+                $("#tema_div").hide();
+                 $("#divdoi").hide();
+                     $(".a_autores1").hide();
 		$(".a_17").show();	
 		$("#tema_l").text("Impacto");
 		$("#abstract_l").text("Descripción");
@@ -290,8 +295,13 @@ $.fn.most_ocul_form_prod = function(tipo, titulo)
 		$(".a_29").show();	
 		$("#abstract_l").text("Descripción");
 	}
-	else if(tipo == "2.11.a" || tipo == "2.11.b" || tipo == "2.12.a")
+	else if(tipo == "2.11.a" || tipo == "2.11.b" || tipo == "2.12.a"){
 		$(".a_4").show();
+                if(tipo == "2.11.b" ){
+                    $(".a_24").show();
+                    
+                }
+            }
 	else if(partes[0] == "3" && partes[1] == "1")
 	{
 		$("#fecha_l").text("Fecha Inicial *");
@@ -363,12 +373,18 @@ $.fn.most_ocul_form_prod = function(tipo, titulo)
 	if(partes[0] == "2" || tipo == "3.3" || partes[0] == "3" && partes[1] == "2")
         {
 		$(".a_autores").show();	
+              if(partes[1] != "9"){
             $(".a_autores1").show();
+        }
+        else{
+              $(".a_autores1").hide();
+        }
         }
         if( tipo == "3.1" || tipo == "3.2" || tipo == "3.2.a" || tipo == "3.2.b" || tipo == "3.3")
         {
 		
             $(".a_autores1").hide();
+            
         }
         if(tipo == "3.1.a"){
             $("#institucion").val("Centro de Investigación de Estudios Avanzados");
@@ -794,9 +810,7 @@ $(document).ready(function()
 					alert(data);
 			}).done(function(){
 				$(".contenido_columna_c .publicaciones_p .publicacion_cuerpo_p").empty();
-				if($(".menu_publicaciones .generales").hasClass("selected"))
-					$(".contenido_columna_c .publicaciones_p .publicacion_cuerpo_p").load( "../Publicaciones/Listado_Publicaciones.php .datos_generales");	
-				else if($(".menu_publicaciones .antecedentes").hasClass("selected"))
+				if($(".menu_publicaciones .antecedentes").hasClass("selected"))
 					$(".contenido_columna_c .publicaciones_p .publicacion_cuerpo_p").load( "../Publicaciones/Listado_Publicaciones.php .antecedentes_academicos");	
 				else if($(".menu_publicaciones .productos_2").hasClass("selected"))
 					$(".contenido_columna_c .publicaciones_p .publicacion_cuerpo_p").load( "../Publicaciones/Listado_Publicaciones.php .productos_menu_2");	
@@ -836,10 +850,9 @@ $(document).ready(function()
 				}
 			}).done(function(){
 				$(".contenido_columna_c .publicaciones_p .publicacion_cuerpo_p").empty();
-				if($(".menu_publicaciones .generales").hasClass("selected"))
-					$(".contenido_columna_c .publicaciones_p .publicacion_cuerpo_p").load( "../Publicaciones/Listado_Publicaciones.php .datos_generales");	
-				else if($(".menu_publicaciones .antecedentes").hasClass("selected"))
+				if($(".menu_publicaciones .antecedentes").hasClass("selected"))
 					$(".contenido_columna_c .publicaciones_p .publicacion_cuerpo_p").load( "../Publicaciones/Listado_Publicaciones.php .antecedentes_academicos");	
+		
 				else if($(".menu_publicaciones .productos_2").hasClass("selected"))
 					$(".contenido_columna_c .publicaciones_p .publicacion_cuerpo_p").load( "../Publicaciones/Listado_Publicaciones.php .productos_menu_2");	
 				else if($(".menu_publicaciones .formacion").hasClass("selected"))
