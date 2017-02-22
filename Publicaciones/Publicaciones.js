@@ -277,9 +277,7 @@ $(document).ready(function()
 		$(this).addClass("selected");
 		$(".umbral").hide();
 		$(".contenido_columna_c .publicaciones_p .publicacion_cuerpo_p").empty();
-		if($(this).hasClass("generales"))
-			$(".contenido_columna_c .publicaciones_p .publicacion_cuerpo_p").load( "../Publicaciones/Listado_Publicaciones.php .datos_generales");	
-		else if($(this).hasClass("antecedentes"))
+		if($(this).hasClass("antecedentes"))
 			$(".contenido_columna_c .publicaciones_p .publicacion_cuerpo_p").load( "../Publicaciones/Listado_Publicaciones.php .antecedentes_academicos");	
 		else if($(this).hasClass("productos_2"))
 			$(".contenido_columna_c .publicaciones_p .publicacion_cuerpo_p").load( "../Publicaciones/Listado_Publicaciones.php .productos_menu_2");	
@@ -329,9 +327,7 @@ $(document).ready(function()
 		$("#l_umbral_factor").text($("#umbral_factor").val());
 		$("#l_umbral_citas").text($("#umbral_citas").val());
 		$(".contenido_columna_c .publicaciones_p .publicacion_cuerpo_p").empty();
-		if($(".menu_publicaciones .generales").hasClass("selected"))
-			$(".contenido_columna_c .publicaciones_p .publicacion_cuerpo_p").load( "../Publicaciones/Listado_Publicaciones.php .datos_generales");	
-		else if($(".menu_publicaciones .antecedentes").hasClass("selected"))
+		if($(".menu_publicaciones .antecedentes").hasClass("selected"))
 			$(".contenido_columna_c .publicaciones_p .publicacion_cuerpo_p").load( "../Publicaciones/Listado_Publicaciones.php .antecedentes_academicos");	
 		else if($(".menu_publicaciones .productos_2").hasClass("selected"))
 			$(".contenido_columna_c .publicaciones_p .publicacion_cuerpo_p").load( "../Publicaciones/Listado_Publicaciones.php .productos_menu_2");	
@@ -378,9 +374,7 @@ $(document).ready(function()
 			else 
 			{
 				$(".contenido_columna_c .publicaciones_p .publicacion_cuerpo_p").empty();
-				if($(".menu_publicaciones .generales").hasClass("selected"))
-					$(".contenido_columna_c .publicaciones_p .publicacion_cuerpo_p").load( "../Publicaciones/Listado_Publicaciones.php .datos_generales");	
-				else if($(".menu_publicaciones .antecedentes").hasClass("selected"))
+				if($(".menu_publicaciones .antecedentes").hasClass("selected"))
 					$(".contenido_columna_c .publicaciones_p .publicacion_cuerpo_p").load( "../Publicaciones/Listado_Publicaciones.php .antecedentes_academicos");	
 				else if($(".menu_publicaciones .productos_2").hasClass("selected"))
 					$(".contenido_columna_c .publicaciones_p .publicacion_cuerpo_p").load( "../Publicaciones/Listado_Publicaciones.php .productos_menu_2");	
@@ -531,15 +525,28 @@ $(document).ready(function()
 					$("#nivel").val(data.Nivel);
 					$("#id_curso").val(data.FK_Curso);
 					$("#curso").val(data.Curso);
-					if(data.Propedeutico == 1)
-						$("#prope_si").attr("checked");
+					if(data.Propedeutico == "1"){
+                                            $("input[name=prope][value='1']").prop("checked",true);   
+  
+//						$("#prope_si").attr("checked");
+                                            }
 					$("#programa").val(data.Nombre_Programa);
 					$("#id_programa").val(data.ID_Programa_Unidad);
 					$("#unidad").val(data.Unidad);
 					$("#id_unidad").val(data.ID_Unidad);
 					$("#institucion").val(data.Institucion);
 					$("#id_institucion").val(data.ID_Institucion);
+                                         if(tipo=="3.2.a" || tipo=="3.2.b" || tipo=="3.3"){
+                                             var cadena=data.Autores;
+                                           var    autorporcion=cadena.split(",");
+
+                                             $("#autores").val(autorporcion[0]);
+                                        $("#autores_2").val(autorporcion[1]);
+                                         }
+                                         else{
 					$("#autores").val(data.Autores);
+                                        $("#autores2").val(data.Autores);
+                                    }
 					$("#doi").val(data.DOI);
 					$("#id_usuario").val(data.FK_Usuario);
 					$("#usuario").val(data.Nombre + " " + data.Apellido_Paterno + "-" + data.Apellido_Materno);
