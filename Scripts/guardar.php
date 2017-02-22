@@ -122,15 +122,22 @@
 					if($_POST['guar_act'] == null)				
 					{
 						$conexion->Guardar("INSERT INTO Tesis (Titulo, Lugar, Abstract, Fecha_Final, Concluida, FK_Tipo) VALUES ('".$_POST['titulo']."', '".$_POST['localidad']."', '".$_POST['abstract']."', '".$_POST['anio_pub_t']."-".$_POST['mes_pub_t']."-".$_POST['dia_pub_t']."', '".$_POST['prope']."', '".$tipo_copei."')");
-						$autores = explode(",", $_POST['autores']);
+						$NombreAutores=$_POST['autores'].",".$_POST['autores_2'];
+                                                $autores = explode(",", $NombreAutores);
 						$identificador = $conexion->identificador;
 						$conexion->Autores_Articulos_Tesis($identificador, $autores, "INSERT INTO Usuario_Tesis(Alias, Etiqueta_Copei, FK_Usuario, FK_Tesis) VALUES", "SELECT MAX(Etiqueta_Copei) as Max FROM Usuario_Tesis, Tesis WHERE ID_Tesis = FK_Tesis AND FK_Tipo = ".$tipo_copei." AND FK_Usuario = ".$_SESSION["Usuario_Temporal"]);
 						$conexion->Guardar("INSERT INTO Usuario_Tesis(Alias, Etiqueta_Copei, FK_Usuario, FK_Tesis, Estudiante) VALUES ('".$_POST['referencia']."', 1, null, ".$identificador.", 1)");
-					}	
+                                
+                                             
+                                               
+                                                
+                                        }	
 					else
 					{
 						$conexion->Guardar("UPDATE Tesis  SET Titulo = '".$_POST['titulo']."', Lugar = '".$_POST['localidad']."', Abstract = '".$_POST['abstract']."', Fecha_Final = '".$_POST['anio_pub_t']."-".$_POST['mes_pub_t']."-".$_POST['dia_pub_t']."', Concluida = '".$_POST['prope']."' WHERE ID_Tesis = ".$_POST['guar_act']);
-						$autores_caja = explode(", ", $_POST['autores']);
+						
+                                                $NombreAutores=$_POST['autores'].", ".$_POST['autores_2'];
+                                                $autores_caja = explode(", ", $NombreAutores);
 						$autores_caja[] = $_POST['referencia'];
 						$autores_bd = $conexion->Consultas("SELECT Alias, ID_Usuario_Tesis as ID_Alias FROM Usuario_Tesis WHERE FK_Tesis = ".$_POST['guar_act']);
 						$conexion->Editar_Autores_Articulos_Tesis($autores_bd, $autores_caja, "Usuario_Tesis", "ID_Usuario_Tesis", $_POST['guar_act'], "INSERT INTO Usuario_Tesis(Alias, Etiqueta_Copei, FK_Usuario, FK_Tesis) VALUES", "SELECT MAX(Etiqueta_Copei) as Max FROM Usuario_Tesis, Tesis WHERE ID_Tesis = FK_Tesis AND FK_Tipo = ".$tipo_copei." AND FK_Usuario = ".$_SESSION["Usuario_Temporal"]);
