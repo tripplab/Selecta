@@ -42,7 +42,7 @@
 			});
 		
 			$(".contenido_columna_c .publicaciones_p .publicacion_cuerpo_p").empty();
-			$(".contenido_columna_c .publicaciones_p .publicacion_cuerpo_p").load( "../Publicaciones/Listado_Publicaciones.php .datos_generales");	
+			$(".contenido_columna_c .publicaciones_p .publicacion_cuerpo_p").load( "../Publicaciones/Listado_Publicaciones.php .antecedentes_academicos");	
 		});	  
 	</script>
 	<body>
@@ -161,9 +161,9 @@
 					</div>
 					
 					<div class="barra_tabuladora grupo_boton contenedor_js menu_publicaciones"><!--tab-bar btn-group js-widgetcontainer-->
-						<a class="boton boton_largo luz_alta cargar_pagina_ajax selected generales"><!--btn btn-large highlights ajax-page-load-->Datos Grales</a>
-						<span class="separador"><!--separator-->&nbsp;</span>
-						<a class="boton boton_largo luz_alta cargar_pagina_ajax antecedentes"><!--btn btn-large highlights ajax-page-load-->Antecedentes <span id="menu_antecedentes"></span></a>
+<!--						<a class="boton boton_largo luz_alta cargar_pagina_ajax selected generales">btn btn-large highlights ajax-page-loadDatos Grales</a>
+						<span class="separador">separator&nbsp;</span>-->
+						<a class="boton boton_largo luz_alta cargar_pagina_ajax selected antecedentes"><!--btn btn-large highlights ajax-page-load-->Antecedentes <span id="menu_antecedentes"></span></a>
 						<span class="separador"><!--separator-->&nbsp;</span>
 						<a class="boton boton_largo luz_alta cargar_pagina_ajax productos_2"><!--btn btn-large highlights ajax-page-load-->Investigación/Desarrollo <span id="menu_productos"></span></a>
 						<span class="separador"><!--separator-->&nbsp;</span>
@@ -190,108 +190,9 @@
 						</div>
 					</div>
 					
-					<div class="columna_derecha_c"><!--c-col-right-->
-						<div class="columnaderecha_literatura"><!--literature-rightcolumn-->
-							<h2>Articulos posiblemente relacionados contigo</h2>
-							<div class="autor_cluster_relacionados contenedor_js"><!--author-cluster-promos js-widgetcontainer-->
-								<div class="contenedor_autores_sugerencias promo_caja_c contenedor_js"><!--suggest-author-container c-box-promo js-widgetcontainer-->
-									<div class="promocion"><!--promo-->
-										<?php 
-											if($rol == "Administrador" || (isset($_SESSION['ID']) && $id == $_SESSION["ID"]))
-											{
-										?>
-												<h3>¿Estos articulos son tuyos?</h3>
-										<?php
-											}
-											else
-											{
-										?>
-												<h3>Articulos que podrían estar relacionados con <?php echo $nombre["Nombre"]." ".$nombre["Apellido_Paterno"]."-".$nombre["Apellido_Materno"];?></h3>
-										<?php
-											}
-											function lista_relacion($titulo, $identificador, $tipo, $autores)
-											{
-												?>
-												<div class="lista_autores_sugeridos" id=<?php echo $identificador;?>><!--suggest-authors-list-->
-													<div class="contenedor_temas_autores_sugeridos contenedor_temas_sugeridos_js"><!--suggest-author-item-container js-suggest-item-container-->
-														<div class="temas_sugeridos_js temas_autores_sugeridos contenedor_js"><!--js-suggest-item suggest-author-item js-widetcontainer-->
-															<div class="indent_contenedor"><!--indent-container-->
-																<div class="titulo_autores_pub"><!--pub-author-and-tittle-->
-																	<a href="./Editar.php?i=<?php echo $identificador;?>&t=<?php echo $tipo;?>&n=<?php echo $titulo;?>" class="publicacion_url"><!--publication-url-->
-																		<div class="titulo_publicacion_js titulo_pub"><!--js-publication-tittle pub-tittle--><?php echo $titulo;?></div>
-																	</a>
-																	<div class="pub_autores"><!--pub-author-->
-																		<span style="color:#444444;"><?php echo $autores;?></span>
-																	</div>
-																</div>
-																<?php
-																	if($GLOBALS['rol'] == "Administrador" || (isset($_SESSION['ID']) && $GLOBALS['id'] == $_SESSION["ID"]))
-																	{
-																?>
-																		<div class="botones_acciones"><!--action-buttons-->
-																			<button class="si_js boton boton_promover margen_boton" value=<?php echo $identificador;?> data-type=<?php echo $tipo;?>><!--yes-js btn btn-promote btn-margin-->Si</button>
-																		</div>
-																<?php
-																	}
-																?>
-															</div>
-														</div>
-													</div>
-												</div>
-												<?php
-											}
-											
-											$autor = $conexion->Consultas("SELECT Nombre, Apellido_Paterno, Apellido_Materno FROM Usuario WHERE ID_Usuario = ".$id);
-											$autor = $autor[0];
-											$nombre = explode(" ", $autor["Nombre"]);
-											$nombre_av = "";
-											for($i = 0; $i < count($nombre); $i++)
-												$nombre_av .= substr($nombre[$i], 0, 1).". ";
-											$nombre_av = trim($nombre_av);
-											$producto = $conexion->Consultas("SELECT Titulo, ID_Articulo, Tipo FROM Articulos, Alias, Tipo_Copei WHERE FK_Tipo = ID_Tipo AND ID_Articulo = FK_Articulo AND (Alias = '".$autor["Nombre"]." ".$autor["Apellido_Paterno"]."-".$autor["Apellido_Materno"]."' OR Alias  = '".$autor["Nombre"]." ".$autor["Apellido_Paterno"]."' OR Alias = '".$nombre_av." ".$autor["Apellido_Paterno"]."' OR Alias = '".$nombre_av." ".$autor["Apellido_Paterno"]."-".$autor["Apellido_Materno"]."' OR Alias = '".$autor["Apellido_Paterno"]."-".$autor["Apellido_Materno"]." ".$nombre_av."') AND FK_Usuario IS NULL");
-											for($x = 0; $x < count($producto); $x++)
-											{
-												$autores = $conexion->Consultas("SELECT Alias FROM Alias WHERE FK_Articulo = ".$producto[$x]["ID_Articulo"]);
-												$l_autores = "";
-												for($z = 0; $z < count($autores); $z++)
-													$l_autores .= $autores[$z]["Alias"].", ";
-												$l_autores = trim($l_autores, ", ");
-												unset($autores);
-												lista_relacion($producto[$x]["Titulo"], $producto[$x]["ID_Articulo"], $producto[$x]["Tipo"], $l_autores);
-											}
-											unset($producto);
-											
-											$producto = $conexion->Consultas("SELECT Titulo, ID_Tesis, Tipo FROM Tesis, Usuario_Tesis, Tipo_Copei WHERE FK_Tipo = ID_Tipo AND ID_Tesis = FK_Tesis AND (Alias = '".$autor["Nombre"]." ".$autor["Apellido_Paterno"]."-".$autor["Apellido_Materno"]."' OR Alias  = '".$autor["Nombre"]." ".$autor["Apellido_Paterno"]."' OR Alias = '".$nombre_av." ".$autor["Apellido_Paterno"]."' OR Alias = '".$nombre_av." ".$autor["Apellido_Paterno"]."-".$autor["Apellido_Materno"]."' OR Alias = '".$autor["Apellido_Paterno"]."-".$autor["Apellido_Materno"]." ".$nombre_av."') AND FK_Usuario IS NULL");
-											for($x = 0; $x < count($producto); $x++)
-											{
-												$autores = $conexion->Consultas("SELECT Alias FROM Usuario_Tesis WHERE FK_Tesis = ".$producto[$x]["ID_Tesis"]);
-												$l_autores = "";
-												for($z = 0; $z < count($autores); $z++)
-													$l_autores .= $autores[$z]["Alias"].", ";
-												$l_autores = trim($l_autores, ", ");
-												unset($autores);
-												lista_relacion($producto[$x]["Titulo"], $producto[$x]["ID_Tesis"], $producto[$x]["Tipo"], $l_autores);
-											}
-											unset($producto);
-										?>
-									</div>
-								</div>
-							</div>
-							<!--<div class="caja_c"><!--c-box-->
-								<!--<div class="cajabuscarliteratura_literatura contenedor_js"><!--literature-literaturesearchbox js-widgetcontainer-->
-									<!--<form class="formulario_buscador"><!--search-form-->
-										<!--<div class="envoltura_busqueda_simple js_envoltura_busqueda"><!--simple-search-wrapper js-search-wrapper-->
-											<!--<input type="text" name="consulta" class="input_buscar_js input_simple_buscar" placeholder="Buscar artículo"><!--js-search-input simple-seach_input-->
-											<!--<a class="boton_simple_buscar buscar_js"><!--simple-search-button js-search-->
-												<!--<span class="buscar_icono_articulo"><!--ico-magnifier--></span>
-											<!--</a>										
-										</div>
-									</form>
-									<div class="limpiar"></div><!--clear-->
-								<!--</div>
-							</div>-->
-						</div>
-					</div>
+<!--					<div class="columna_derecha_c">c-col-right
+						
+					</div>-->
 				</div>
 			</div>
 		</div>
