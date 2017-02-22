@@ -404,7 +404,7 @@
 								<h1 class="titulo_publicacion"><!--pub-tittle--><?php echo $titulo;?></h1>
 								<div class="autores_publicacion contenedor_js"><!--pub-authors js-widgetcontainer-->
 									<div class="expander_contenedor_js expander_colapsado_js" style="max-height: none;"><!--js-expander-container js-expander-collapsed-->
-										<p><?php echo $autores;?></p>
+										<p><?php echo $autores;?> </p>
 									</div>
 								</div>
 								<div class="detalles_publicacion"><!--pub-details--><?php echo $detalles;?></div>
